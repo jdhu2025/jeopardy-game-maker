@@ -3,25 +3,27 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { getThemePage } from '@/core/theme';
 import { envConfigs } from '@/config';
-import { getLocalPage } from '@/shared/models/post';
+import { defaultLocale } from '@/config/locale';
 import { QuizboardApp } from '@/shared/blocks/quizboard/quizboard-app';
+import { SeoPageContent } from '@/shared/blocks/quizboard/seo-page-content';
+import {
+  quizboardSeoPages,
+  quizboardSeoSlugs,
+} from '@/shared/blocks/quizboard/seo-pages';
+import { getLocalPage } from '@/shared/models/post';
 
 export const revalidate = 3600;
 
-const quizboardPages: Record<string, { title: string; description: string; topic: string }> = {
-  'make-a-jeopardy-game': { title: 'Make a Jeopardy Game Online | Quizboard Maker', description: 'Make a playable quiz board from one topic, then edit and host it online.', topic: 'Create a classroom review game' },
-  'free-jeopardy-game-maker': { title: 'Free Jeopardy Game Maker | Quizboard Maker', description: 'Generate a free 5 by 5 quiz board and host it with your team.', topic: 'Free quiz board game' },
-  'how-to-make-a-jeopardy-game': { title: 'How to Make a Jeopardy Game | Quizboard Maker', description: 'Follow a simple three-step workflow to create and host a quiz board.', topic: 'How to make a classroom quiz game' },
-  'jeopardy-powerpoint': { title: 'Jeopardy PowerPoint Alternative | Quizboard Maker', description: 'Move from hand-built PowerPoint boards to an editable online quiz game.', topic: 'PowerPoint review game alternative' },
-  'jeopardy-google-slides': { title: 'Jeopardy Google Slides Alternative | Quizboard Maker', description: 'Create an online quiz board without manually wiring Google Slides.', topic: 'Google Slides quiz game alternative' },
-  'ai-jeopardy-game-maker': { title: 'AI Jeopardy Game Maker | Quizboard Maker', description: 'Use AI to draft a review board, inspect every answer, and host the game.', topic: 'AI-generated classroom review game' },
-  'classroom-review-game-maker': { title: 'Classroom Review Game Maker | Quizboard Maker', description: 'Build a review game for a grade, subject, chapter, and class period.', topic: 'Grade 7 classroom review game' },
-  'quiz-board-maker': { title: 'Quiz Board Maker | Quizboard Maker', description: 'Create an editable 5 by 5 quiz board from a topic in minutes.', topic: 'Quiz board maker demo' },
-  'templates': { title: 'Quiz Game Templates | Quizboard Maker', description: 'Start from a review game template, then make every question your own.', topic: 'Quiz game template' },
-  'from-pdf': { title: 'Quiz Game Maker from PDF | Quizboard Maker', description: 'Turn source material into a review board with answer review and citations.', topic: 'Quiz game from source material' },
-  'team-quiz': { title: 'Online Team Quiz Maker | Quizboard Maker', description: 'Create a team quiz with a host screen, room code, and live scores.', topic: 'Online team quiz' },
-  'online-jeopardy': { title: 'Online Jeopardy Game | Quizboard Maker', description: 'Host a team quiz online with a board, room code, and live scores.', topic: 'Online team quiz game' },
-};
+export function generateStaticParams() {
+  // The keyword pages are intentionally English-first. Avoid publishing a
+  // second, untranslated URL set that would compete with the canonical pages.
+  return quizboardSeoSlugs.map((slug) => ({ locale: defaultLocale, slug }));
+}
+
+function getCanonicalUrl(locale: string, slug: string) {
+  const base = envConfigs.app_url.replace(/\/$/, '');
+  return `${base}${locale === defaultLocale ? '' : `/${locale}`}/${slug}`;
+}
 
 // dynamic page metadata
 export async function generateMetadata({
@@ -30,8 +32,30 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string | string[] }>;
 }) {
   const { locale, slug } = await params;
-  const quizboardPage = quizboardPages[typeof slug === 'string' ? slug : (slug as string[])[0]];
-  if (quizboardPage) return { title: quizboardPage.title, description: quizboardPage.description };
+  const quizboardSlug = typeof slug === 'string' ? slug : slug.join('/');
+  const quizboardPage = quizboardSeoPages[quizboardSlug];
+  if (quizboardPage) {
+    const canonical = getCanonicalUrl(locale, quizboardPage.slug);
+    return {
+      title: quizboardPage.title,
+      description: quizboardPage.description,
+      keywords: [
+        quizboardPage.keyword,
+        'quiz board maker',
+        'classroom review game',
+        'online quiz game',
+      ],
+      alternates: { canonical },
+      openGraph: {
+        type: 'website',
+        url: canonical,
+        title: quizboardPage.title,
+        description: quizboardPage.description,
+        siteName: envConfigs.app_name,
+      },
+      robots: { index: locale === defaultLocale, follow: true },
+    };
+  }
 
   // metadata values
   let title = '';
@@ -120,9 +144,20 @@ export default async function DynamicPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const quizboardSlug = typeof slug === 'string' ? slug : (slug as string[]).join('/');
-  const quizboardPage = quizboardPages[quizboardSlug];
-  if (quizboardPage) return <QuizboardApp initialTopic={quizboardPage.topic} />;
+  const quizboardSlug =
+    typeof slug === 'string' ? slug : (slug as string[]).join('/');
+  const quizboardPage = quizboardSeoPages[quizboardSlug];
+  if (quizboardPage)
+    return (
+      <>
+        <QuizboardApp
+          initialTopic={quizboardPage.topic}
+          heroTitle={quizboardPage.h1}
+          heroLede={quizboardPage.lede}
+        />
+        <SeoPageContent slug={quizboardPage.slug} />
+      </>
+    );
 
   // 1. try to get static page from
   // content/pages/**/*.mdx

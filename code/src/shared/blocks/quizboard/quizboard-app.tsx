@@ -122,11 +122,15 @@ export function QuizboardApp({
   initialGame,
   initialShareId,
   canDelete = false,
+  heroTitle = 'Turn a topic into a room full of aha moments.',
+  heroLede = 'Build a board for class review, team training, or your next big get-together. Start with one sentence, then make every question yours.',
 }: {
   initialTopic?: string;
   initialGame?: Game;
   initialShareId?: string;
   canDelete?: boolean;
+  heroTitle?: string;
+  heroLede?: string;
 }) {
   const [topic, setTopic] = useState(initialTopic);
   const [audience, setAudience] = useState('Classroom');
@@ -712,14 +716,8 @@ export function QuizboardApp({
               <p className={styles.eyebrow}>
                 <span className={styles.pulse} /> AI QUIZ BOARD MAKER
               </p>
-              <h1>
-                Turn a topic into a room full of <em>aha</em> moments.
-              </h1>
-              <p className={styles.lede}>
-                Build a board for class review, team training, or your next big
-                get-together. Start with one sentence, then make every question
-                yours.
-              </p>
+              <h1>{heroTitle}</h1>
+              <p className={styles.lede}>{heroLede}</p>
               <div className={styles.trustRow}>
                 <span>✦ no account to start</span>
                 <span>✦ 5 × 5 board</span>

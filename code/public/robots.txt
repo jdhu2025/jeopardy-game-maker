@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /activity/
+Disallow: /settings/
+Disallow: /privacy-policy
+Disallow: /terms-of-service
+
+Sitemap: https://quizboardly.com/sitemap.xml
