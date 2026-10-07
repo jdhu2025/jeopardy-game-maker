@@ -17,7 +17,12 @@ export const revalidate = 3600;
 export function generateStaticParams() {
   // The keyword pages are intentionally English-first. Avoid publishing a
   // second, untranslated URL set that would compete with the canonical pages.
-  return quizboardSeoSlugs.map((slug) => ({ locale: defaultLocale, slug }));
+  // Catch-all route parameters must be arrays, even when a route only has one
+  // path segment (for example, /en/jeopardy-game-maker).
+  return quizboardSeoSlugs.map((slug) => ({
+    locale: defaultLocale,
+    slug: [slug],
+  }));
 }
 
 function getCanonicalUrl(locale: string, slug: string) {
