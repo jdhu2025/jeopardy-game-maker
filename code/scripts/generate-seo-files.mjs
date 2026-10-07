@@ -29,9 +29,8 @@ const keywordSlugs = [
 const supportingSlugs = ['blog', 'pricing', 'showcases'];
 
 const publicDir = path.join(process.cwd(), 'public');
-// Use a fresh endpoint name so Google does not reuse the failed fetch result
-// cached for the previous sitemap URLs in Search Console.
-const authoritativeSitemapFilename = 'sitemap-20261007.xml';
+// Keep the stable Google sitemap endpoint as the single source of truth.
+const authoritativeSitemapFilename = 'google-sitemap.xml';
 const pageSlugs = ['', ...keywordSlugs, ...supportingSlugs];
 
 const googleSitemapUrls = pageSlugs.map((slug) => {
@@ -55,9 +54,5 @@ const robots = `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDis
 fs.mkdirSync(publicDir, { recursive: true });
 fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap);
 fs.writeFileSync(path.join(publicDir, 'google-sitemap.xml'), googleSitemap);
-fs.writeFileSync(
-  path.join(publicDir, authoritativeSitemapFilename),
-  googleSitemap
-);
 fs.writeFileSync(path.join(publicDir, 'robots.txt'), robots);
 console.log(`Generated static sitemaps and robots.txt for ${siteUrl}`);

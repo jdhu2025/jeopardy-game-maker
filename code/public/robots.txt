@@ -7,4 +7,4 @@ Disallow: /settings/
 Disallow: /privacy-policy
 Disallow: /terms-of-service
 
-Sitemap: https://www.quizboardly.xyz/sitemap-20261007.xml
+Sitemap: https://www.quizboardly.xyz/google-sitemap.xml
