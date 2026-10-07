@@ -29,6 +29,9 @@ const keywordSlugs = [
 const supportingSlugs = ['blog', 'pricing', 'showcases'];
 
 const publicDir = path.join(process.cwd(), 'public');
+// Use a fresh endpoint name so Google does not reuse the failed fetch result
+// cached for the previous sitemap URLs in Search Console.
+const authoritativeSitemapFilename = 'sitemap-20261007.xml';
 const pageSlugs = ['', ...keywordSlugs, ...supportingSlugs];
 
 const googleSitemapUrls = pageSlugs.map((slug) => {
@@ -47,10 +50,14 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 // sitemap advertised the retired .com hostname. Avoid volatile lastmod values
 // and ignored priority/changefreq fields here, matching Google's core format.
 const googleSitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${googleSitemapUrls.join('\n')}\n</urlset>\n`;
-const robots = `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /activity/\nDisallow: /settings/\nDisallow: /privacy-policy\nDisallow: /terms-of-service\n\nSitemap: ${siteUrl}/google-sitemap.xml\n`;
+const robots = `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /activity/\nDisallow: /settings/\nDisallow: /privacy-policy\nDisallow: /terms-of-service\n\nSitemap: ${siteUrl}/${authoritativeSitemapFilename}\n`;
 
 fs.mkdirSync(publicDir, { recursive: true });
 fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap);
 fs.writeFileSync(path.join(publicDir, 'google-sitemap.xml'), googleSitemap);
+fs.writeFileSync(
+  path.join(publicDir, authoritativeSitemapFilename),
+  googleSitemap
+);
 fs.writeFileSync(path.join(publicDir, 'robots.txt'), robots);
 console.log(`Generated static sitemaps and robots.txt for ${siteUrl}`);
