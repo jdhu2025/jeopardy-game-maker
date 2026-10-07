@@ -1,0 +1,12 @@
+{
+  "provider": "",
+  "apiUrl": "",
+  "model": "",
+  "apiKeyEnv": "",
+  "maxInputTokens": "",
+  "maxOutputTokens": "",
+  "temperature": "",
+  "dailyAnonymousGenerations": "",
+  "monthlyFreeGenerations": "",
+  "monthlyHardBudgetUsd": ""
+}
