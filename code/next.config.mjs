@@ -44,6 +44,16 @@ const nextConfig = {
         ],
       },
       {
+        source: '/google-sitemap.xml',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value:
+              'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      {
         source: '/robots.txt',
         headers: [
           {
