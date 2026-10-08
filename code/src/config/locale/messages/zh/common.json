@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "ShipAny 模板二",
-    "description": "ShipAny 是用于构建 AI SaaS 创业项目的 NextJS 脚手架。提供丰富模板和组件，助您快速上线产品。",
-    "keywords": "shipany, shipany-boilerplate, shipany-template-two-demo"
+    "title": "Quizboard Maker｜AI 题库游戏制作工具",
+    "description": "输入主题即可快速生成 AI 题库游戏，逐题审核和编辑答案，并在线或离线主持团队竞赛。Quizboard Maker 适合课堂复习、培训和聚会。",
+    "keywords": "Jeopardy 游戏制作, 题库游戏, AI 题库, 课堂复习游戏"
   },
   "sign": {
     "sign_in_title": "登录",

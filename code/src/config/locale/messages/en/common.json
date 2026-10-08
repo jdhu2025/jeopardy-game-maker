@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "ShipAny Template Two",
-    "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups. Ship Fast with a variety of templates and components.",
-    "keywords": "shipany, shipany-boilerplate, shipany-template-two-demo"
+    "title": "Quizboard Maker | AI Quiz Board for Classrooms & Teams",
+    "description": "Create an AI quiz board from any topic in minutes. Review every question, edit the answers, and host a team game online or offline with Quizboard Maker. Start free today.",
+    "keywords": "jeopardy game maker, quiz board maker, AI quiz game, classroom review game"
   },
   "sign": {
     "sign_in_title": "Sign In",

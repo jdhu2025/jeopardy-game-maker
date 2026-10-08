@@ -3,6 +3,10 @@ import { getTranslations } from 'next-intl/server';
 
 import { ConsoleLayout } from '@/shared/blocks/console/layout';
 
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
 export default async function ActivityLayout({
   children,
 }: {

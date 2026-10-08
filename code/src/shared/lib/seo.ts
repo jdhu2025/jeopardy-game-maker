@@ -1,7 +1,45 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { envConfigs } from '@/config';
-import { defaultLocale } from '@/config/locale';
+import { defaultLocale, locales } from '@/config/locale';
+
+function getSiteUrl() {
+  return envConfigs.app_url.replace(/\/$/, '');
+}
+
+function getLocalizedUrl(path: string, locale: string) {
+  const base = getSiteUrl();
+  const normalizedPath = path === '/' ? '' : `/${path.replace(/^\/+|\/+$/g, '')}`;
+  return `${base}${locale === defaultLocale ? '' : `/${locale}`}${normalizedPath}` || base;
+}
+
+/**
+ * Build page-specific canonical and hreflang URLs. The old global hreflang
+ * links in the root layout pointed every page at the home page, which creates
+ * conflicting language signals for search engines.
+ */
+export function getLocalizedAlternates(path: string, locale: string) {
+  const canonical = path.startsWith('http')
+    ? path
+    : getLocalizedUrl(path, locale);
+
+  if (path.startsWith('http')) {
+    return { canonical };
+  }
+
+  return {
+    canonical,
+    languages: {
+      ...Object.fromEntries(
+        locales.map((localizedLocale) => [
+          localizedLocale,
+          getLocalizedUrl(path, localizedLocale),
+        ])
+      ),
+      'x-default': getLocalizedUrl(path, defaultLocale),
+    },
+  };
+}
 
 // get metadata for page component
 export function getMetadata(
@@ -47,10 +85,7 @@ export function getMetadata(
     }
 
     // canonical url
-    const canonicalUrl = await getCanonicalUrl(
-      options.canonicalUrl || '',
-      locale || ''
-    );
+    const canonicalUrl = await getCanonicalUrl(options.canonicalUrl || '', locale || '');
 
     const title =
       passedMetadata.title || translatedMetadata.title || defaultMetadata.title;
@@ -86,9 +121,7 @@ export function getMetadata(
         passedMetadata.keywords ||
         translatedMetadata.keywords ||
         defaultMetadata.keywords,
-      alternates: {
-        canonical: canonicalUrl,
-      },
+      alternates: getLocalizedAlternates(options.canonicalUrl || '/', locale),
 
       openGraph: {
         type: 'website',
@@ -143,13 +176,7 @@ async function getCanonicalUrl(canonicalUrl: string, locale: string) {
       canonicalUrl = `/${canonicalUrl}`;
     }
 
-    canonicalUrl = `${envConfigs.app_url}${
-      !locale || locale === defaultLocale ? '' : `/${locale}`
-    }${canonicalUrl}`;
-
-    if (locale !== defaultLocale && canonicalUrl.endsWith('/')) {
-      canonicalUrl = canonicalUrl.slice(0, -1);
-    }
+    canonicalUrl = getLocalizedUrl(canonicalUrl, locale || defaultLocale);
   }
 
   return canonicalUrl;

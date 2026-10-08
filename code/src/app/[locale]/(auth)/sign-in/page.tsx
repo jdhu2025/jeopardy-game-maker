@@ -1,11 +1,11 @@
 import { getTranslations } from 'next-intl/server';
-
-import { envConfigs } from '@/config';
 import { defaultLocale } from '@/config/locale';
+
 import { redirect } from '@/core/i18n/navigation';
 import { SignIn } from '@/shared/blocks/sign/sign-in';
 import { getConfigs } from '@/shared/models/config';
 import { getSignUser } from '@/shared/models/user';
+import { getLocalizedAlternates } from '@/shared/lib/seo';
 
 function safeInternalPath(raw?: string) {
   if (!raw) return '/';
@@ -32,12 +32,9 @@ export async function generateMetadata({
 
   return {
     title: `${t('sign.sign_in_title')} - ${t('metadata.title')}`,
-    alternates: {
-      canonical:
-        locale !== defaultLocale
-          ? `${envConfigs.app_url}/${locale}/sign-in`
-          : `${envConfigs.app_url}/sign-in`,
-    },
+    description: t('sign.sign_in_description'),
+    alternates: getLocalizedAlternates('/sign-in', locale),
+    robots: { index: false, follow: false },
   };
 }
 

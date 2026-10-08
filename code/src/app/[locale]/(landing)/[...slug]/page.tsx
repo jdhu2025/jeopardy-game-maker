@@ -11,6 +11,7 @@ import {
   quizboardSeoSlugs,
 } from '@/shared/blocks/quizboard/seo-pages';
 import { getLocalPage } from '@/shared/models/post';
+import { getLocalizedAlternates } from '@/shared/lib/seo';
 
 export const revalidate = 3600;
 
@@ -40,7 +41,9 @@ export async function generateMetadata({
   const quizboardSlug = typeof slug === 'string' ? slug : slug.join('/');
   const quizboardPage = quizboardSeoPages[quizboardSlug];
   if (quizboardPage) {
-    const canonical = getCanonicalUrl(locale, quizboardPage.slug);
+    // Keyword landing pages are intentionally English-only. Keep every
+    // accidental /zh variant out of the index and point it to the English URL.
+    const canonical = getCanonicalUrl(defaultLocale, quizboardPage.slug);
     return {
       title: quizboardPage.title,
       description: quizboardPage.description,
@@ -50,7 +53,10 @@ export async function generateMetadata({
         'classroom review game',
         'online quiz game',
       ],
-      alternates: { canonical },
+      alternates: {
+        canonical,
+        languages: { en: canonical, 'x-default': canonical },
+      },
       openGraph: {
         type: 'website',
         url: canonical,
@@ -65,7 +71,6 @@ export async function generateMetadata({
   // metadata values
   let title = '';
   let description = '';
-  let canonicalUrl = '';
 
   // 1. try to get static page metadata from
   // content/pages/**/*.mdx
@@ -80,11 +85,6 @@ export async function generateMetadata({
   }
 
   // build canonical url
-  canonicalUrl =
-    locale !== envConfigs.locale
-      ? `${envConfigs.app_url}/${locale}/${staticPageSlug}`
-      : `${envConfigs.app_url}/${staticPageSlug}`;
-
   // get static page content
   const staticPage = await getLocalPage({ slug: staticPageSlug, locale });
 
@@ -96,9 +96,7 @@ export async function generateMetadata({
     return {
       title,
       description,
-      alternates: {
-        canonical: canonicalUrl,
-      },
+      alternates: getLocalizedAlternates(`/${staticPageSlug}`, locale),
     };
   }
 
@@ -120,9 +118,7 @@ export async function generateMetadata({
     return {
       title,
       description,
-      alternates: {
-        canonical: canonicalUrl,
-      },
+      alternates: getLocalizedAlternates(`/${staticPageSlug}`, locale),
     };
   }
 
@@ -135,9 +131,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: {
-      canonical: canonicalUrl,
-    },
+    alternates: getLocalizedAlternates(`/${staticPageSlug}`, locale),
   };
 }
 

@@ -1,9 +1,8 @@
 import { getTranslations } from 'next-intl/server';
 
 import { redirect } from '@/core/i18n/navigation';
-import { envConfigs } from '@/config';
-import { defaultLocale } from '@/config/locale';
 import { VerifyEmailPage } from '@/shared/blocks/sign/verify-email';
+import { getLocalizedAlternates } from '@/shared/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -15,12 +14,9 @@ export async function generateMetadata({
 
   return {
     title: `${t('sign.verify_email_page_title')} - ${t('metadata.title')}`,
-    alternates: {
-      canonical:
-        locale !== defaultLocale
-          ? `${envConfigs.app_url}/${locale}/verify-email`
-          : `${envConfigs.app_url}/verify-email`,
-    },
+    description: t('sign.verify_email_page_description'),
+    alternates: getLocalizedAlternates('/verify-email', locale),
+    robots: { index: false, follow: false },
   };
 }
 

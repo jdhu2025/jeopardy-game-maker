@@ -4,7 +4,7 @@ import { getMetadata } from '@/shared/lib/seo';
 export const generateMetadata = getMetadata({
   title: 'Quizboard Maker | AI Quiz Board Maker for Classrooms and Teams',
   description:
-    'Create a classroom or team quiz board from a topic in minutes. Review every question, then host your game online or offline.',
+    'Create an AI quiz board from any topic in minutes. Review every question, edit answers, and host a team game online or offline.',
   keywords:
     'quiz board maker, AI quiz game maker, classroom review game, online team quiz',
   canonicalUrl: '/',
