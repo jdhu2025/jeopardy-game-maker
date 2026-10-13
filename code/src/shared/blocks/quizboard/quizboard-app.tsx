@@ -9,6 +9,8 @@ import {
   type TextareaHTMLAttributes,
 } from 'react';
 
+import { trackQuizboardEvent } from '@/shared/lib/quizboard-analytics';
+
 import { buildOfflineGameHtml } from './offline-game';
 import {
   inferQuestionMedia,
@@ -162,6 +164,8 @@ export function QuizboardApp({
   const [rewriteSuggestions, setRewriteSuggestions] = useState<
     Record<string, Partial<Question>>
   >({});
+  const landingTracked = useRef(false);
+  const topicInteractionTracked = useRef(false);
   const flatQuestions = useMemo(
     () =>
       game?.categories.flatMap((category) =>
@@ -204,6 +208,15 @@ export function QuizboardApp({
   }, [initialGame]);
 
   useEffect(() => {
+    if (landingTracked.current) return;
+    landingTracked.current = true;
+    trackQuizboardEvent('landing_view', {
+      page_path: window.location.pathname,
+      entry_type: initialGame ? 'shared_board' : 'generator',
+    });
+  }, [initialGame]);
+
+  useEffect(() => {
     const enterFullscreenForGame = (event: MouseEvent) => {
       const button =
         event.target instanceof Element ? event.target.closest('button') : null;
@@ -224,6 +237,11 @@ export function QuizboardApp({
       setStatus('Add a topic first');
       return;
     }
+    trackQuizboardEvent('generate_started', {
+      audience,
+      language,
+      has_existing_board: Boolean(game),
+    });
     setLoading(true);
     setStatus('Building your board');
     setNotice('');
@@ -238,6 +256,16 @@ export function QuizboardApp({
       setGame(nextGame);
       setTopic(nextGame.topic || nextTopic);
       setStatus('Board ready');
+      trackQuizboardEvent('generate_completed', {
+        audience,
+        language,
+        category_count: nextGame.categories.length,
+        question_count: nextGame.categories.reduce(
+          (count, category) => count + category.questions.length,
+          0
+        ),
+      });
+      trackQuizboardEvent('review_opened', { source: 'generation' });
       if (nextGame.notice) setNotice(nextGame.notice);
       window.setTimeout(
         () =>
@@ -248,6 +276,10 @@ export function QuizboardApp({
       );
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Generation failed');
+      trackQuizboardEvent('generate_failed', {
+        audience,
+        language,
+      });
     } finally {
       setLoading(false);
     }
@@ -312,6 +344,7 @@ export function QuizboardApp({
     link.remove();
     URL.revokeObjectURL(url);
     setStatus('Offline game downloaded');
+    trackQuizboardEvent('offline_game_downloaded');
   }
 
   function updateQuestion(
@@ -534,17 +567,24 @@ export function QuizboardApp({
 
   async function submitFeedback() {
     if (!feedbackText.trim()) return;
-    await fetch('/api/feedback', {
+    const response = await fetch('/api/feedback', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         message: feedbackText,
         page: window.location.pathname,
       }),
-    }).catch(() => undefined);
+    }).catch(() => null);
+    if (!response?.ok) {
+      setStatus('Feedback could not be sent. Please try again.');
+      return;
+    }
     setFeedbackText('');
     setFeedbackOpen(false);
     setStatus('Thanks — feedback received');
+    trackQuizboardEvent('feedback_submitted', {
+      page_path: window.location.pathname,
+    });
   }
 
   function joinRoom() {
@@ -623,6 +663,11 @@ export function QuizboardApp({
                 id="topic"
                 rows={4}
                 value={topic}
+                onFocus={() => {
+                  if (topicInteractionTracked.current) return;
+                  topicInteractionTracked.current = true;
+                  trackQuizboardEvent('topic_input_started');
+                }}
                 onChange={(event) => setTopic(event.target.value)}
                 placeholder="e.g. Grade 7 weather systems"
               />
@@ -764,7 +809,12 @@ export function QuizboardApp({
                   )}
                   <button
                     className={styles.secondaryButton}
-                    onClick={() => setBatchReviewOpen(true)}
+                    onClick={() => {
+                      setBatchReviewOpen(true);
+                      trackQuizboardEvent('review_opened', {
+                        source: 'manual',
+                      });
+                    }}
                   >
                     Review all questions
                   </button>
@@ -782,7 +832,12 @@ export function QuizboardApp({
                   </button>
                   <button
                     className={`${styles.primaryButton} ${styles.compact}`}
-                    onClick={() => setHostMode(true)}
+                    onClick={() => {
+                      setHostMode(true);
+                      trackQuizboardEvent('game_started', {
+                        team_count: teamNames.length,
+                      });
+                    }}
                   >
                     Start game ↗
                   </button>

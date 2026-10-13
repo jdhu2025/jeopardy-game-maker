@@ -7,11 +7,11 @@ import { defaultLocale } from '@/config/locale';
 import { QuizboardApp } from '@/shared/blocks/quizboard/quizboard-app';
 import { SeoPageContent } from '@/shared/blocks/quizboard/seo-page-content';
 import {
+  indexableQuizboardSeoSlugs,
   quizboardSeoPages,
-  quizboardSeoSlugs,
 } from '@/shared/blocks/quizboard/seo-pages';
-import { getLocalPage } from '@/shared/models/post';
 import { getLocalizedAlternates } from '@/shared/lib/seo';
+import { getLocalPage } from '@/shared/models/post';
 
 export const revalidate = 3600;
 
@@ -20,7 +20,7 @@ export function generateStaticParams() {
   // second, untranslated URL set that would compete with the canonical pages.
   // Catch-all route parameters must be arrays, even when a route only has one
   // path segment (for example, /en/jeopardy-game-maker).
-  return quizboardSeoSlugs.map((slug) => ({
+  return indexableQuizboardSeoSlugs.map((slug) => ({
     locale: defaultLocale,
     slug: [slug],
   }));

@@ -3,6 +3,10 @@ import { getSessionCookie } from 'better-auth/cookies';
 import createIntlMiddleware from 'next-intl/middleware';
 
 import { routing } from '@/core/i18n/config';
+import {
+  indexableQuizboardSeoSlugs,
+  quizboardSeoRedirects,
+} from '@/shared/blocks/quizboard/seo-pages';
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -18,6 +22,32 @@ export async function proxy(request: NextRequest) {
   const pathWithoutLocale = isValidLocale
     ? pathname.slice(locale.length + 1)
     : pathname;
+  const normalizedPath = pathWithoutLocale || '/';
+  const requestedSlug = normalizedPath.replace(/^\//, '');
+  const canonicalSlug =
+    quizboardSeoRedirects[requestedSlug] ||
+    (indexableQuizboardSeoSlugs.includes(
+      requestedSlug as (typeof indexableQuizboardSeoSlugs)[number]
+    )
+      ? requestedSlug
+      : null);
+
+  // The public product landing pages are English-only for now. Redirecting
+  // their duplicate /zh URLs is more explicit than relying on canonical tags
+  // for pages that contain the same English content.
+  if (locale === 'zh' && (normalizedPath === '/' || canonicalSlug)) {
+    const destination = canonicalSlug ? `/${canonicalSlug}` : '/';
+    return NextResponse.redirect(new URL(destination, request.url), 308);
+  }
+
+  // Consolidate keyword variants and pages for unavailable features. A 308 is
+  // a definitive signal to Google and preserves any future external links.
+  if (canonicalSlug && canonicalSlug !== requestedSlug) {
+    return NextResponse.redirect(
+      new URL(`/${canonicalSlug}`, request.url),
+      308
+    );
+  }
 
   // Only check authentication for admin routes
   if (

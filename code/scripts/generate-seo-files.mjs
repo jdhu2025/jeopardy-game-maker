@@ -10,23 +10,15 @@ const siteUrl = (
   .trim()
   .replace(/\/$/, '');
 
+// Only pages with distinct, useful content belong in the sitemap. The other
+// keyword variants are 308 redirects to these canonical resources.
 const keywordSlugs = [
   'jeopardy-game-maker',
-  'make-a-jeopardy-game',
-  'free-jeopardy-game-maker',
   'how-to-make-a-jeopardy-game',
-  'jeopardy-powerpoint',
-  'jeopardy-google-slides',
-  'ai-jeopardy-game-maker',
   'classroom-review-game-maker',
-  'quiz-board-maker',
-  'templates',
-  'from-pdf',
-  'team-quiz',
-  'online-jeopardy',
 ];
 
-const supportingSlugs = ['blog', 'pricing', 'showcases'];
+const supportingSlugs = [];
 
 const publicDir = path.join(process.cwd(), 'public');
 // Keep the stable Google sitemap endpoint as the single source of truth.

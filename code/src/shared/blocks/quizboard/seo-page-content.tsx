@@ -45,6 +45,34 @@ export function SeoPageContent({ slug }: { slug: string }) {
                 </article>
               ))}
             </div>
+            {page.details && page.details.length > 0 && (
+              <div className={styles.details}>
+                {page.details.map((detail) => (
+                  <article key={detail.heading}>
+                    <h3>{detail.heading}</h3>
+                    <p>{detail.body}</p>
+                    {detail.bullets && detail.bullets.length > 0 && (
+                      <ul>
+                        {detail.bullets.map((bullet) => (
+                          <li key={bullet}>{bullet}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </article>
+                ))}
+              </div>
+            )}
+            {page.faqs && page.faqs.length > 0 && (
+              <section className={styles.faq} aria-labelledby={`${slug}-faq`}>
+                <h2 id={`${slug}-faq`}>Questions about this quiz workflow</h2>
+                {page.faqs.map((faq) => (
+                  <details key={faq.question}>
+                    <summary>{faq.question}</summary>
+                    <p>{faq.answer}</p>
+                  </details>
+                ))}
+              </section>
+            )}
             <nav
               className={styles.related}
               aria-label="Related quiz maker pages"

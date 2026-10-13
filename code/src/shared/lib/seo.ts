@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { envConfigs } from '@/config';
-import { defaultLocale, locales } from '@/config/locale';
+import { defaultLocale } from '@/config/locale';
 
 function getSiteUrl() {
   return envConfigs.app_url.replace(/\/$/, '');
@@ -9,36 +9,26 @@ function getSiteUrl() {
 
 function getLocalizedUrl(path: string, locale: string) {
   const base = getSiteUrl();
-  const normalizedPath = path === '/' ? '' : `/${path.replace(/^\/+|\/+$/g, '')}`;
-  return `${base}${locale === defaultLocale ? '' : `/${locale}`}${normalizedPath}` || base;
+  const normalizedPath =
+    path === '/' ? '' : `/${path.replace(/^\/+|\/+$/g, '')}`;
+  return (
+    `${base}${locale === defaultLocale ? '' : `/${locale}`}${normalizedPath}` ||
+    base
+  );
 }
 
 /**
- * Build page-specific canonical and hreflang URLs. The old global hreflang
- * links in the root layout pointed every page at the home page, which creates
- * conflicting language signals for search engines.
+ * Canonical URLs are safe for every page. Hreflang is intentionally omitted
+ * until a page has a genuinely translated counterpart: the public landing
+ * pages currently render the same English product content at / and /zh, so
+ * declaring them as alternates makes Google treat them as duplicates.
  */
 export function getLocalizedAlternates(path: string, locale: string) {
   const canonical = path.startsWith('http')
     ? path
     : getLocalizedUrl(path, locale);
 
-  if (path.startsWith('http')) {
-    return { canonical };
-  }
-
-  return {
-    canonical,
-    languages: {
-      ...Object.fromEntries(
-        locales.map((localizedLocale) => [
-          localizedLocale,
-          getLocalizedUrl(path, localizedLocale),
-        ])
-      ),
-      'x-default': getLocalizedUrl(path, defaultLocale),
-    },
-  };
+  return { canonical };
 }
 
 // get metadata for page component
@@ -85,7 +75,10 @@ export function getMetadata(
     }
 
     // canonical url
-    const canonicalUrl = await getCanonicalUrl(options.canonicalUrl || '', locale || '');
+    const canonicalUrl = await getCanonicalUrl(
+      options.canonicalUrl || '',
+      locale || ''
+    );
 
     const title =
       passedMetadata.title || translatedMetadata.title || defaultMetadata.title;

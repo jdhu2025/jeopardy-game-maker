@@ -9,7 +9,31 @@ export type QuizboardSeoPage = {
   introHeading: string;
   intro: string;
   sections: Array<{ heading: string; body: string }>;
+  details?: Array<{ heading: string; body: string; bullets?: string[] }>;
+  faqs?: Array<{ question: string; answer: string }>;
   related: string[];
+};
+
+// These are the only keyword pages with a distinct search intent, user task,
+// and supporting content. Close variants are consolidated by a permanent
+// redirect instead of competing in Google's index with the same product UI.
+export const indexableQuizboardSeoSlugs = [
+  'jeopardy-game-maker',
+  'how-to-make-a-jeopardy-game',
+  'classroom-review-game-maker',
+] as const;
+
+export const quizboardSeoRedirects: Record<string, string> = {
+  'ai-jeopardy-game-maker': 'jeopardy-game-maker',
+  'free-jeopardy-game-maker': 'jeopardy-game-maker',
+  'quiz-board-maker': 'jeopardy-game-maker',
+  'make-a-jeopardy-game': 'how-to-make-a-jeopardy-game',
+  'jeopardy-powerpoint': 'jeopardy-game-maker',
+  'jeopardy-google-slides': 'jeopardy-game-maker',
+  'from-pdf': 'jeopardy-game-maker',
+  templates: 'jeopardy-game-maker',
+  'team-quiz': 'jeopardy-game-maker',
+  'online-jeopardy': 'jeopardy-game-maker',
 };
 
 export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
@@ -33,6 +57,42 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
       {
         heading: 'Built for real classroom and training moments',
         body: 'Use grade level, subject, audience, and time limits to shape the board. Every answer remains editable so a teacher or trainer stays in control of accuracy and tone.',
+      },
+    ],
+    details: [
+      {
+        heading: 'Start with a precise topic',
+        body: 'The first prompt decides whether a board feels useful or generic. Name the audience, subject, and lesson boundary. “Grade 7 weather systems: fronts, pressure, and forecasts” gives the generator useful constraints; “weather” does not. Add the time available when the game must fit a single class or meeting.',
+        bullets: [
+          'Include the grade, role, or experience level of the players.',
+          'Name the unit, chapter, policy, or skill to be reviewed.',
+          'State whether the goal is a warm-up, review, or final check.',
+        ],
+      },
+      {
+        heading: 'Treat the first board as a review draft',
+        body: 'A generated board saves setup time, but it cannot know which examples your group has covered or which terms need to match your materials. Use the review workspace to scan every question, answer, explanation, and point value. Rewrite vague prompts, remove duplicate concepts, and make the higher-value squares meaningfully harder before you host.',
+      },
+      {
+        heading: 'Run a game without losing control of the content',
+        body: 'Once the board is ready, the host view keeps the current question, answer reveal, used squares, and score adjustments in one place. That reduces the slide switching and spreadsheet tracking that make a live review feel slow. You can also export the finished board for an offline session after reviewing it.',
+      },
+    ],
+    faqs: [
+      {
+        question: 'What should I include in a quiz board prompt?',
+        answer:
+          'Include the subject, audience, scope, and desired difficulty. A focused prompt produces categories and questions that need less editing.',
+      },
+      {
+        question: 'Can I edit generated questions?',
+        answer:
+          'Yes. Review the prompt, answer, explanation, difficulty, and points before using the board with a group.',
+      },
+      {
+        question: 'Is this an official Jeopardy product?',
+        answer:
+          'No. Quizboard Maker creates a category-and-points quiz format for review, training, and group activities.',
       },
     ],
     related: [
@@ -117,6 +177,47 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
       {
         heading: 'Step 3: Host with teams',
         body: 'Use the presentation view to reveal questions and answers, track team totals, and let players join with a room code when you want online participation.',
+      },
+    ],
+    details: [
+      {
+        heading: '1. Define the learning or training target',
+        body: 'Choose one outcome for the board. For a classroom, that might be “identify the causes of the American Revolution”; for training, it might be “apply the incident-reporting policy.” A clear target keeps categories from becoming a mix of trivia and makes it easier to judge whether each answer is correct.',
+      },
+      {
+        heading:
+          '2. Build categories that cover the target from different angles',
+        body: 'A balanced board usually mixes recall, explanation, application, and challenge questions. Categories should describe what players will practice, not just repeat the name of the topic. Point values should rise because the reasoning becomes more demanding, not because the wording becomes longer.',
+        bullets: [
+          'Use early squares to check key vocabulary or facts.',
+          'Use middle squares for explanation, comparison, or classification.',
+          'Use later squares for application to an example or scenario.',
+        ],
+      },
+      {
+        heading: '3. Check the answer key before the game starts',
+        body: 'Every square needs an answer that a host can evaluate consistently. Check names, dates, calculations, and accepted alternatives. Add a short explanation where it helps the host resolve a close response. This review is especially important when questions begin as AI-generated drafts.',
+      },
+      {
+        heading: '4. Host, observe, and improve the next board',
+        body: 'During the game, note where players hesitate, which categories run too quickly, and which questions cause disagreement. Those observations are more useful than simply keeping the final score. Use them to narrow the next topic, simplify a category, or make one section more challenging.',
+      },
+    ],
+    faqs: [
+      {
+        question: 'How many questions should a review game include?',
+        answer:
+          'Use enough questions to match the available time. A 5 by 5 board works well when the host needs a full session, but shorter activities benefit from a narrower scope and fewer categories.',
+      },
+      {
+        question: 'How do I make the game fair for teams?',
+        answer:
+          'Keep point values consistent with the effort required, publish the answer criteria before scoring close responses, and avoid questions that depend on knowledge outside the chosen topic.',
+      },
+      {
+        question: 'Should I copy a TV game format exactly?',
+        answer:
+          'No. Adapt categories, points, timing, and scoring to your group. A classroom or training review should prioritize accurate feedback over imitation.',
       },
     ],
     related: [
@@ -222,6 +323,46 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
       {
         heading: 'Keep the teacher in control',
         body: 'Edit any wording, answer, explanation, or point value. Use the host view to reveal answers, manage teams, undo scoring mistakes, and keep the pace of class.',
+      },
+    ],
+    details: [
+      {
+        heading: 'Build around the lesson students actually received',
+        body: 'A classroom review game is most effective when its questions use the vocabulary, examples, and level of explanation from the current unit. Start with the grade, subject, chapter, and learning target. Then review the generated draft against the worksheet, reading, lab, or discussion your students used.',
+      },
+      {
+        heading: 'Use categories to reveal gaps before an assessment',
+        body: 'Separate a unit into a few meaningful skills, such as vocabulary, causes and effects, calculations, evidence, and real-world application. Watching which categories students choose or avoid gives the teacher useful input for the next lesson. The board is a review activity, not a substitute for checking the work behind every answer.',
+        bullets: [
+          'Keep language accessible for the class reading level.',
+          'Include an explanation for answers likely to cause confusion.',
+          'Balance confident participation with questions that require discussion.',
+        ],
+      },
+      {
+        heading: 'Make participation manageable',
+        body: 'Assign teams, set a clear response routine, and decide in advance how to handle partial answers. The host controls let the teacher reveal questions, show answers, and adjust scores without switching between multiple files. That keeps attention on the discussion rather than the mechanics of the game.',
+      },
+      {
+        heading: 'Reuse the structure, not stale questions',
+        body: 'The same board format can work across a course, but the content should change with each unit. Save a successful structure as a starting point, then replace the questions and verify the answer key for the next group. This preserves useful routines without making review predictable or outdated.',
+      },
+    ],
+    faqs: [
+      {
+        question: 'Which subjects work with a classroom review game?',
+        answer:
+          'Any subject with clear concepts, examples, or skills to practice can work, including science, history, language arts, mathematics, and workplace training.',
+      },
+      {
+        question: 'How can I keep questions age-appropriate?',
+        answer:
+          'Specify the grade and topic in the prompt, then review every generated question for reading level, curriculum fit, and answer accuracy before class.',
+      },
+      {
+        question: 'What should I do when a question is unclear?',
+        answer:
+          'Rewrite or remove it before hosting. A review game should make the learning target clearer, not turn scoring into a debate about wording.',
       },
     ],
     related: [
