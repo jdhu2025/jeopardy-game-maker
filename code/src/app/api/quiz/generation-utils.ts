@@ -378,6 +378,46 @@ const PROFILE_SEEDS: ProfileSeed[] = [
     ],
   },
   {
+    match:
+      /(workplace safety|occupational safety|safety training|hazard|incident reporting|PPE|OSHA|工作场所安全|职业安全|安全培训)/i,
+    label: 'workplace safety fundamentals',
+    concepts: [
+      'hazard identification',
+      'risk controls',
+      'personal protective equipment',
+      'incident reporting',
+      'emergency response',
+    ],
+    facts: [
+      'A hazard is a source of potential harm; identifying it is the first step before estimating risk or choosing a control.',
+      'The hierarchy of controls prioritizes elimination, substitution, engineering controls, administrative controls, and then personal protective equipment.',
+      'Personal protective equipment reduces exposure but does not remove the hazard, so it must fit correctly and match the task.',
+      'Prompt incident and near-miss reporting helps an organization investigate causes and prevent recurrence without waiting for a serious injury.',
+      'An emergency response plan should define alarms, evacuation routes, assembly points, communication, and role-specific actions.',
+    ],
+    examples: [
+      'A wet floor is marked and cleaned promptly while the leak causing it is repaired.',
+      'A machine guard separates a worker from moving parts instead of relying only on a warning sign.',
+      'Safety glasses selected for impact protection are inspected and worn during the task that creates flying particles.',
+      'A near miss involving a falling object is reported so storage and handling controls can be corrected.',
+      'Workers follow the posted evacuation route and report to the assigned assembly point during a drill.',
+    ],
+    relationships: [
+      'Hazard identification supplies the evidence needed to compare risk and select an effective control.',
+      'Higher-level controls reduce exposure at its source, while procedures and protective equipment depend more on consistent human action.',
+      'Training explains how to use protective equipment, but supervision and maintenance are needed to keep the protection effective.',
+      'Incident reports connect immediate facts with root-cause investigation and corrective action.',
+      'Emergency plans connect preparation, communication, evacuation, and accountability during a time-critical event.',
+    ],
+    scenarios: [
+      'A walkway repeatedly becomes slippery near a leaking pipe: choose a control that addresses the source and an immediate protective step.',
+      'A task produces flying particles: identify the hazard, an engineering control, and suitable personal protective equipment.',
+      'An employee almost trips over a cable but is not injured: explain why the near miss should still be reported.',
+      'A fire alarm sounds during a shift: apply the site emergency plan without inventing a role-specific action.',
+      'A new chemical is introduced: identify which label, safety data, training, and exposure controls must be checked before use.',
+    ],
+  },
+  {
     match: /(geography|map|latitude|longitude|population|migration|地理|地图|人口|迁移)/i,
     label: 'geography and human systems',
     concepts: ['maps and spatial scale', 'latitude and longitude', 'climate and physical processes', 'population patterns', 'migration and resources'],

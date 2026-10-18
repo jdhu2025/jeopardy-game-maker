@@ -42,17 +42,17 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
     keyword: 'jeopardy game maker',
     title: 'Jeopardy Game Maker | Create Online Quiz Boards in Minutes',
     description:
-      'Create a Jeopardy-style quiz board from a topic, review every answer, and host it with teams online or offline.',
+      'Create a Jeopardy-style quiz board from a topic, review every answer, host it on a shared screen, or download an offline game.',
     topic: 'Create a Jeopardy-style classroom review game',
     h1: 'Jeopardy Game Maker for Classrooms, Training, and Teams',
-    lede: 'Turn one topic into a playable quiz board, review the questions with AI, and host the game on a big screen in minutes.',
+    lede: 'Turn one topic into a playable quiz board, review every question, and host the game on a big screen in minutes.',
     introHeading: 'A faster way to make a Jeopardy-style game',
     intro:
       'Quizboard Maker gives you the familiar categories, points, answers, and team scoring of a Jeopardy-style review game without the spreadsheet or slide-deck setup. Start with a subject, keep the questions that work, and edit anything before you host.',
     sections: [
       {
         heading: 'Create, review, and host in one workflow',
-        body: 'Generate a 5 by 5 board, scan all 25 questions in the review view, then launch a presentation screen with team totals, a room code, and optional offline play.',
+        body: 'Build a 5 by 5 board, scan all 25 questions in the review view, then launch a presentation screen with answer reveals, team totals, and optional offline play.',
       },
       {
         heading: 'Built for real classroom and training moments',
@@ -95,21 +95,17 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
           'No. Quizboard Maker creates a category-and-points quiz format for review, training, and group activities.',
       },
     ],
-    related: [
-      'ai-jeopardy-game-maker',
-      'classroom-review-game-maker',
-      'online-jeopardy',
-    ],
+    related: ['how-to-make-a-jeopardy-game', 'classroom-review-game-maker'],
   },
   'make-a-jeopardy-game': {
     slug: 'make-a-jeopardy-game',
     keyword: 'make a jeopardy game',
-    title: 'Make a Jeopardy Game Online | AI Quiz Board Maker',
+    title: 'Make a Jeopardy Game Online | Editable Quiz Board Maker',
     description:
       'Make a playable Jeopardy-style game online from a topic. Edit the questions, save the board, and host it with teams.',
     topic: 'Make a classroom Jeopardy-style game',
     h1: 'Make a Jeopardy Game Online in Three Simple Steps',
-    lede: 'Describe the lesson, meeting, or party topic and get a ready-to-edit quiz board you can play with a projector or remote teams.',
+    lede: 'Describe the lesson, meeting, or party topic and get a ready-to-edit quiz board you can play on a shared screen.',
     introHeading: 'How to make a Jeopardy game without building slides',
     intro:
       'Choose a topic, review the generated categories and answers, and start the game when the board is ready. You can change a single question or rewrite the whole board before sharing it.',
@@ -134,7 +130,7 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
     keyword: 'free jeopardy game maker',
     title: 'Free Jeopardy Game Maker | Build and Host a Quiz Board',
     description:
-      'Use a free Jeopardy game maker to generate a 5 by 5 quiz board, edit the questions, and host a review game online.',
+      'Use a free Jeopardy game maker to build a 5 by 5 quiz board, edit the questions, and host a review game on a shared screen.',
     topic: 'Free classroom quiz board game',
     h1: 'Free Jeopardy Game Maker for Your Next Review Game',
     lede: 'Generate a free board from a topic, check every answer, and try the host mode before you decide what to save or share.',
@@ -148,7 +144,7 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
       },
       {
         heading: 'Keep the questions you trust',
-        body: 'AI suggestions are drafts, not a replacement for your judgment. Review the answer and explanation for each square before you use the board with students or colleagues.',
+        body: 'Generated suggestions are drafts, not a replacement for your judgment. Review the answer and explanation for each square before you use the board with students or colleagues.',
       },
     ],
     related: ['jeopardy-game-maker', 'make-a-jeopardy-game', 'templates'],
@@ -176,7 +172,7 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
       },
       {
         heading: 'Step 3: Host with teams',
-        body: 'Use the presentation view to reveal questions and answers, track team totals, and let players join with a room code when you want online participation.',
+        body: 'Use the presentation view to reveal questions and answers, track team totals, and keep the board visible on a shared screen.',
       },
     ],
     details: [
@@ -196,7 +192,7 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
       },
       {
         heading: '3. Check the answer key before the game starts',
-        body: 'Every square needs an answer that a host can evaluate consistently. Check names, dates, calculations, and accepted alternatives. Add a short explanation where it helps the host resolve a close response. This review is especially important when questions begin as AI-generated drafts.',
+        body: 'Every square needs an answer that a host can evaluate consistently. Check names, dates, calculations, and accepted alternatives. Add a short explanation where it helps the host resolve a close response. This review is especially important when questions begin as generated drafts.',
       },
       {
         heading: '4. Host, observe, and improve the next board',
@@ -220,11 +216,7 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
           'No. Adapt categories, points, timing, and scoring to your group. A classroom or training review should prioritize accurate feedback over imitation.',
       },
     ],
-    related: [
-      'jeopardy-powerpoint',
-      'jeopardy-google-slides',
-      'online-jeopardy',
-    ],
+    related: ['jeopardy-game-maker', 'classroom-review-game-maker'],
   },
   'jeopardy-powerpoint': {
     slug: 'jeopardy-powerpoint',
@@ -263,7 +255,7 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
       'Create an editable Jeopardy-style quiz board without manually wiring Google Slides. Review questions and host with live team scores.',
     topic: 'Google Slides Jeopardy alternative',
     h1: 'Make a Jeopardy Game Without Wiring Google Slides',
-    lede: 'Start from a topic, review a complete board, and run the game in a purpose-built host view with room codes and team scoring.',
+    lede: 'Start from a topic, review a complete board, and run the game in a purpose-built host view with answer reveals and team scoring.',
     introHeading: 'A simpler Google Slides alternative for review games',
     intro:
       'Slides are useful for presenting content, but a quiz board also needs state: which squares are used, what answer is revealed, and how teams are scored. Quizboard Maker handles those interactions for you.',
@@ -273,8 +265,8 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
         body: 'Generate a draft, edit the wording and answers, then publish only after the board passes your review. The host screen stays focused on the current question.',
       },
       {
-        heading: 'Invite players with a room code',
-        body: 'For remote or hybrid groups, share a short code or QR entry instead of asking every player to open and navigate a slide deck.',
+        heading: 'Keep play on one shared screen',
+        body: 'Project the host view so the group can follow the board, question, answer reveal, and team totals without navigating a slide deck.',
       },
     ],
     related: ['jeopardy-powerpoint', 'online-jeopardy', 'team-quiz'],
@@ -306,7 +298,7 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
   'classroom-review-game-maker': {
     slug: 'classroom-review-game-maker',
     keyword: 'classroom review game maker',
-    title: 'Classroom Review Game Maker | AI Quiz Boards for Teachers',
+    title: 'Classroom Review Game Maker | Editable Quiz Boards for Teachers',
     description:
       'Build a classroom review game for a grade, subject, and chapter. Generate questions, review answers, and host with team scoring.',
     topic: 'Grade 7 classroom review game',
@@ -365,11 +357,7 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
           'Rewrite or remove it before hosting. A review game should make the learning target clearer, not turn scoring into a debate about wording.',
       },
     ],
-    related: [
-      'ai-jeopardy-game-maker',
-      'free-jeopardy-game-maker',
-      'templates',
-    ],
+    related: ['jeopardy-game-maker', 'how-to-make-a-jeopardy-game'],
   },
   'quiz-board-maker': {
     slug: 'quiz-board-maker',
@@ -390,7 +378,7 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
       },
       {
         heading: 'Host in the format your group needs',
-        body: 'Project the board for a room, invite remote players with a code, or download an offline copy for a low-connectivity setting.',
+        body: 'Project the board for a room, manage team totals from the host screen, or download an offline copy for a low-connectivity setting.',
       },
     ],
     related: ['jeopardy-game-maker', 'team-quiz', 'templates'],
@@ -454,19 +442,19 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
   'team-quiz': {
     slug: 'team-quiz',
     keyword: 'online team quiz game maker',
-    title: 'Online Team Quiz Game Maker | Host Live Games with Room Codes',
+    title: 'Team Quiz Game Maker | Host Shared-Screen Games',
     description:
-      'Create an online team quiz with a host screen, room code, QR entry, live scores, and editable questions.',
+      'Create a team quiz with editable questions, a shared host screen, answer reveals, and team score controls.',
     topic: 'Online team quiz game',
-    h1: 'Online Team Quiz Game Maker for Live Groups',
-    lede: 'Create the questions, invite teams with a short room code, and keep the game moving with a focused host screen.',
+    h1: 'Team Quiz Game Maker for Live Groups',
+    lede: 'Create the questions, organize teams in the room, and keep the game moving with a focused host screen.',
     introHeading: 'A team quiz needs more than a question list',
     intro:
       'The host needs to reveal the right information at the right time, track totals, and recover from a scoring mistake. This workflow keeps the board, question, answer, and team controls connected.',
     sections: [
       {
-        heading: 'Invite teams without account friction',
-        body: 'Share a room code or QR entry so players can join from their own devices while the host controls the board and scoring.',
+        heading: 'Organize teams without account friction',
+        body: 'Name teams and manage their totals from the host screen without requiring player accounts or extra devices.',
       },
       {
         heading: 'Run the room from one presentation view',
@@ -478,19 +466,19 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
   'online-jeopardy': {
     slug: 'online-jeopardy',
     keyword: 'online jeopardy',
-    title: 'Online Jeopardy Game | Play with Teams from Any Device',
+    title: 'Online Jeopardy-Style Game | Host from One Screen',
     description:
-      'Host an online Jeopardy-style game with a shared board, room code, team scores, and an optional offline mode.',
+      'Host a Jeopardy-style game with a shared board, answer reveals, team scores, and an optional offline mode.',
     topic: 'Online Jeopardy-style team game',
-    h1: 'Online Jeopardy-Style Games for Remote and In-Person Teams',
-    lede: 'Give the host a clear board and let players join from their own devices with a room code or QR link.',
+    h1: 'Online Jeopardy-Style Games for In-Person Teams',
+    lede: 'Give the host a clear board for a projector or shared display, with answers and team totals in one place.',
     introHeading: 'Make an online game feel easy to host',
     intro:
-      'Remote groups need more than a video call and a list of questions. The host view should make the board state, answer reveal, and team totals obvious even when players are joining from different devices.',
+      'A group game needs more than a list of questions. The host view keeps the board state, answer reveal, and team totals visible from one shared screen.',
     sections: [
       {
         heading: 'Use the same board online or offline',
-        body: 'Build and review the questions once, then choose the live room mode or download an independent copy for an in-person session without reliable internet.',
+        body: 'Build and review the questions once, then use the host screen or download an independent copy for a session without reliable internet.',
       },
       {
         heading: 'Keep the focus on play',

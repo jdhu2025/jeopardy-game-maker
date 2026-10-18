@@ -5,6 +5,7 @@ type EventParams = Record<string, AnalyticsValue | undefined>;
 
 declare global {
   interface Window {
+    dataLayer?: unknown[];
     gtag?: (
       command: 'event',
       eventName: string,
@@ -30,5 +31,17 @@ export function trackQuizboardEvent(name: string, params: EventParams = {}) {
       detail: { name, params: safeParams },
     })
   );
-  window.gtag?.('event', name, safeParams);
+  if (window.gtag) {
+    window.gtag('event', name, safeParams);
+  } else {
+    // Queue early events such as landing_view until gtag.js initializes.
+    const queueEvent = function (
+      command: 'event',
+      eventName: string,
+      params: Record<string, AnalyticsValue>
+    ) {
+      (window.dataLayer ||= []).push(arguments);
+    };
+    queueEvent('event', name, safeParams);
+  }
 }

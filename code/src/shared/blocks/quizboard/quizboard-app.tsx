@@ -8,6 +8,7 @@ import {
   useState,
   type TextareaHTMLAttributes,
 } from 'react';
+import Link from 'next/link';
 
 import { trackQuizboardEvent } from '@/shared/lib/quizboard-analytics';
 
@@ -58,7 +59,6 @@ type ScoreEvent = {
   delta: number;
   timestamp: number;
 };
-const roomCode = 'QZ-4821';
 const topicSuggestions = [
   {
     label: 'Budgeting & Credit',
@@ -145,10 +145,8 @@ export function QuizboardApp({
   const [scores, setScores] = useState<number[]>([0, 0]);
   const [teamNames, setTeamNames] = useState(['Team A', 'Team B']);
   const [hostMode, setHostMode] = useState(false);
-  const [playerMode, setPlayerMode] = useState(false);
-  const [joinOpen, setJoinOpen] = useState(false);
-  const [joinCode, setJoinCode] = useState('');
   const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackGoal, setFeedbackGoal] = useState('classroom-review');
   const [feedbackText, setFeedbackText] = useState('');
   const [refineOpen, setRefineOpen] = useState(false);
   const [refineText, setRefineText] = useState('');
@@ -441,7 +439,7 @@ export function QuizboardApp({
         ...suggestions,
         [question.id]: next,
       }));
-      setStatus('AI suggestion ready — review before saving');
+      setStatus('Rewrite suggestion ready — review before saving');
     } catch {
       setStatus('Question kept; try again in a moment');
     } finally {
@@ -476,7 +474,7 @@ export function QuizboardApp({
       delete next[id];
       return next;
     });
-    setStatus('AI suggestion accepted');
+    setStatus('Rewrite suggestion accepted');
   }
 
   function discardRewrite(id: string) {
@@ -485,7 +483,7 @@ export function QuizboardApp({
       delete next[id];
       return next;
     });
-    setStatus('AI suggestion discarded');
+    setStatus('Rewrite suggestion discarded');
   }
 
   async function rewriteQuestion() {
@@ -573,6 +571,7 @@ export function QuizboardApp({
       body: JSON.stringify({
         message: feedbackText,
         page: window.location.pathname,
+        category: feedbackGoal,
       }),
     }).catch(() => null);
     if (!response?.ok) {
@@ -584,14 +583,8 @@ export function QuizboardApp({
     setStatus('Thanks — feedback received');
     trackQuizboardEvent('feedback_submitted', {
       page_path: window.location.pathname,
+      feedback_goal: feedbackGoal,
     });
-  }
-
-  function joinRoom() {
-    if (joinCode.replace(/\W/g, '').length < 4) return;
-    setJoinOpen(false);
-    setPlayerMode(true);
-    setHostMode(false);
   }
 
   function updateBoardTeam(index: number, name: string) {
@@ -621,33 +614,19 @@ export function QuizboardApp({
     );
   }
 
-  if (playerMode)
-    return (
-      <PlayerView
-        code={joinCode || roomCode}
-        exit={() => setPlayerMode(false)}
-      />
-    );
-
   return (
     <div className={styles.shell}>
       <header className={styles.topbar}>
-        <a className={styles.brand} href="/">
+        <Link className={styles.brand} href="/">
           <span className={styles.brandMark}>Q</span>
           <span>
             quizboard<span className={styles.brandDot}>.</span>
           </span>
-        </a>
+        </Link>
         <nav>
           <a href="#how">How it works</a>
-          <a href="/boards">Browse boards</a>
+          <Link href="/boards">Browse boards</Link>
           <a href="#templates">Templates</a>
-          <button
-            className={styles.ghostButton}
-            onClick={() => setJoinOpen(true)}
-          >
-            Join a room
-          </button>
         </nav>
       </header>
       {!hostMode ? (
@@ -690,7 +669,7 @@ export function QuizboardApp({
                   className={styles.inlineButton}
                   onClick={() => setRefineOpen(true)}
                 >
-                  ✦ Adjust theme with AI
+                  ✦ Adjust theme
                 </button>
                 <span>Keep or change any suggestion</span>
               </div>
@@ -759,14 +738,14 @@ export function QuizboardApp({
             </div>
             <div className={styles.heroCopy}>
               <p className={styles.eyebrow}>
-                <span className={styles.pulse} /> AI QUIZ BOARD MAKER
+                <span className={styles.pulse} /> EDITABLE QUIZ BOARD MAKER
               </p>
               <h1>{heroTitle}</h1>
               <p className={styles.lede}>{heroLede}</p>
               <div className={styles.trustRow}>
                 <span>✦ no account to start</span>
                 <span>✦ 5 × 5 board</span>
-                <span>✦ host or share</span>
+                <span>✦ host or download</span>
               </div>
             </div>
           </section>
@@ -777,8 +756,7 @@ export function QuizboardApp({
                   <p className={styles.eyebrow}>02 / REVIEW YOUR BOARD</p>
                   <h2>{game.title}</h2>
                   <p className={styles.sectionMeta}>
-                    Generated from “{game.topic}” · edit any square before
-                    hosting
+                    Built from “{game.topic}” · edit any square before hosting
                   </p>
                 </div>
                 <div className={styles.toolbar}>
@@ -1069,38 +1047,6 @@ export function QuizboardApp({
       >
         ✎ Feedback
       </button>
-      {joinOpen && (
-        <div className={styles.modalBackdrop} role="dialog" aria-modal="true">
-          <div className={styles.modal}>
-            <button
-              className={styles.modalClose}
-              onClick={() => setJoinOpen(false)}
-            >
-              ×
-            </button>
-            <p className={styles.eyebrow}>JOIN A ROOM</p>
-            <h2>Enter the room code</h2>
-            <p>Use the 6-character code shown on your host’s screen.</p>
-            <input
-              autoFocus
-              value={joinCode}
-              onChange={(event) =>
-                setJoinCode(event.target.value.toUpperCase())
-              }
-              placeholder="e.g. QZ-4821"
-              maxLength={8}
-              onKeyDown={(event) => event.key === 'Enter' && joinRoom()}
-            />
-            <button className={styles.primaryButton} onClick={joinRoom}>
-              <span>Join room</span>
-              <span>↗</span>
-            </button>
-            <small>
-              No account needed. You can change teams after joining.
-            </small>
-          </div>
-        </div>
-      )}
       {feedbackOpen && (
         <div className={styles.modalBackdrop} role="dialog" aria-modal="true">
           <div className={styles.modal}>
@@ -1111,13 +1057,28 @@ export function QuizboardApp({
               ×
             </button>
             <p className={styles.eyebrow}>HELP US IMPROVE</p>
-            <h2>What should we fix?</h2>
+            <h2>Help us improve your workflow</h2>
+            <label htmlFor="feedback-goal">What are you trying to do?</label>
+            <select
+              id="feedback-goal"
+              value={feedbackGoal}
+              onChange={(event) => setFeedbackGoal(event.target.value)}
+            >
+              <option value="classroom-review">
+                Create a classroom review game
+              </option>
+              <option value="team-training">Create a training game</option>
+              <option value="event-game">Create a game for an event</option>
+              <option value="other">Something else</option>
+            </select>
+            <label htmlFor="feedback-text">Where did you get stuck?</label>
             <textarea
+              id="feedback-text"
               rows={5}
               autoFocus
               value={feedbackText}
               onChange={(event) => setFeedbackText(event.target.value)}
-              placeholder="Tell us what felt confusing or what you want to see next."
+              placeholder="Tell us what felt confusing or what stopped you from finishing."
             />
             <button className={styles.primaryButton} onClick={submitFeedback}>
               <span>Send feedback</span>
@@ -1190,12 +1151,12 @@ function InfoSections() {
           [
             '02',
             'Make it yours',
-            'Edit a question, answer, points, or explanation. Rewrite one square or the whole board with AI.',
+            'Edit a question, answer, points, or explanation. Rewrite one square or rebuild the whole board.',
           ],
           [
             '03',
             'Get the room moving',
-            'Host on a big screen or share a code and QR entry for players.',
+            'Host on a shared screen, reveal answers, and manage team totals.',
           ],
         ].map(([num, title, body]) => (
           <div key={num}>
@@ -1211,8 +1172,8 @@ function InfoSections() {
           {[
             'classroom review game',
             'free quiz board maker',
-            'online team quiz',
-            'AI game generator',
+            'classroom team quiz',
+            'quiz game generator',
             'PowerPoint alternative',
           ].map((keyword) => (
             <span key={keyword}>{keyword}</span>
@@ -1447,13 +1408,13 @@ function BatchReview({
                           onClick={() => onRewrite(question)}
                           disabled={loading}
                         >
-                          {loading ? 'Working…' : 'AI rewrite'}
+                          {loading ? 'Working…' : 'Suggest a rewrite'}
                         </button>
                       </div>
                       {suggestion && (
                         <div className={styles.rewriteSuggestion}>
                           <div>
-                            <strong>AI suggestion</strong>
+                            <strong>Rewrite suggestion</strong>
                             <span>
                               Preview before it changes your saved question.
                             </span>
@@ -1726,7 +1687,7 @@ function HostView({
       <main className={styles.hostBoardMode}>
         <header className={styles.hostBoardHeader}>
           <div>
-            <p className={styles.eyebrow}>LIVE GAME BOARD · {roomCode}</p>
+            <p className={styles.eyebrow}>LIVE GAME BOARD</p>
             <h1>{game.title}</h1>
           </div>
           <div className={styles.hostBoardActions}>
@@ -1986,7 +1947,7 @@ function HostView({
     <main className={styles.hostView}>
       <div className={styles.hostTop}>
         <div>
-          <p className={styles.eyebrow}>LIVE HOST MODE · {roomCode}</p>
+          <p className={styles.eyebrow}>LIVE HOST MODE</p>
           <h2>{game.title}</h2>
           <p className={styles.hostInstruction}>
             {ended
@@ -2233,48 +2194,7 @@ function HostView({
               − Remove team
             </button>
           </div>
-          <div className={styles.roomCode}>
-            <span>Student room</span>
-            <strong>{roomCode}</strong>
-            <small>Students enter this code; the host controls scoring</small>
-            <div className={styles.qrVisual} aria-label="QR code visual">
-              <i />
-              <i />
-              <i />
-              <i />
-              <i />
-              <i />
-              <i />
-              <i />
-              <i />
-            </div>
-            <button
-              className={styles.copyCode}
-              onClick={() => navigator.clipboard?.writeText(roomCode)}
-            >
-              Copy room code
-            </button>
-          </div>
         </aside>
-      </div>
-    </main>
-  );
-}
-
-function PlayerView({ code, exit }: { code: string; exit: () => void }) {
-  return (
-    <main className={styles.playerView}>
-      <div className={styles.playerCard}>
-        <span className={styles.brandMark}>Q</span>
-        <p className={styles.eyebrow}>ROOM {code}</p>
-        <h1>You’re in.</h1>
-        <p>Your host will start the next question. Keep this page open.</p>
-        <div className={styles.playerPulse}>
-          <span /> Waiting for the host
-        </div>
-        <button className={styles.secondaryButton} onClick={exit}>
-          Leave room
-        </button>
       </div>
     </main>
   );

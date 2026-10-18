@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import styles from './seo-page-content.module.css';
-import { quizboardSeoPages } from './seo-pages';
+import { indexableQuizboardSeoSlugs, quizboardSeoPages } from './seo-pages';
 
 export function SeoPageContent({ slug }: { slug: string }) {
   const page = quizboardSeoPages[slug];
@@ -15,7 +15,7 @@ export function SeoPageContent({ slug }: { slug: string }) {
     operatingSystem: 'Web',
     description: page.description,
     featureList: [
-      'AI quiz board generation',
+      'Topic-based quiz board drafts',
       'Question and answer review',
       'Team scoring and host mode',
       'Offline quiz game download',
@@ -79,15 +79,21 @@ export function SeoPageContent({ slug }: { slug: string }) {
             >
               <h2>Explore related quiz maker pages</h2>
               <div>
-                {page.related.map((relatedSlug) => {
-                  const related = quizboardSeoPages[relatedSlug];
-                  if (!related) return null;
-                  return (
-                    <Link key={related.slug} href={`/${related.slug}`}>
-                      {related.keyword}
-                    </Link>
-                  );
-                })}
+                {page.related
+                  .filter((relatedSlug) =>
+                    indexableQuizboardSeoSlugs.includes(
+                      relatedSlug as (typeof indexableQuizboardSeoSlugs)[number]
+                    )
+                  )
+                  .map((relatedSlug) => {
+                    const related = quizboardSeoPages[relatedSlug];
+                    if (!related) return null;
+                    return (
+                      <Link key={related.slug} href={`/${related.slug}`}>
+                        {related.keyword}
+                      </Link>
+                    );
+                  })}
               </div>
             </nav>
           </div>
