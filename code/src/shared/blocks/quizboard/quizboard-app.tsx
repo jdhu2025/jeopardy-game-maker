@@ -81,6 +81,38 @@ const topicSuggestions = [
   { label: 'Music Theory', value: 'Music theory: rhythm, scales, and harmony' },
 ];
 
+type WorkflowStep = {
+  number: string;
+  title: string;
+  body: string;
+};
+
+const defaultWorkflowSteps: WorkflowStep[] = [
+  {
+    number: '01',
+    title: 'Say what you need',
+    body: 'One plain-language prompt becomes a structured board draft.',
+  },
+  {
+    number: '02',
+    title: 'Make it yours',
+    body: 'Edit a question, answer, points, or explanation. Rewrite one square or rebuild the whole board.',
+  },
+  {
+    number: '03',
+    title: 'Get the room moving',
+    body: 'Host on a shared screen, reveal answers, and manage team totals.',
+  },
+];
+
+const defaultSearchTerms = [
+  'classroom review game',
+  'free quiz board maker',
+  'classroom team quiz',
+  'quiz game generator',
+  'PowerPoint alternative',
+];
+
 function AutosizeTextarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   const ref = useRef<HTMLTextAreaElement>(null);
   const value = props.value;
@@ -126,6 +158,11 @@ export function QuizboardApp({
   canDelete = false,
   heroTitle = 'Turn a topic into a room full of aha moments.',
   heroLede = 'Build a board for class review, team training, or your next big get-together. Start with one sentence, then make every question yours.',
+  heroEyebrow = 'EDITABLE QUIZ BOARD MAKER',
+  generatorMicrocopy = 'You’ll get a board you can review, revise, and host.',
+  trustPoints = ['no account to start', '5 × 5 board', 'host or download'],
+  workflowSteps = defaultWorkflowSteps,
+  searchTerms = defaultSearchTerms,
 }: {
   initialTopic?: string;
   initialGame?: Game;
@@ -133,6 +170,11 @@ export function QuizboardApp({
   canDelete?: boolean;
   heroTitle?: string;
   heroLede?: string;
+  heroEyebrow?: string;
+  generatorMicrocopy?: string;
+  trustPoints?: string[];
+  workflowSteps?: WorkflowStep[];
+  searchTerms?: string[];
 }) {
   const [topic, setTopic] = useState(initialTopic);
   const [audience, setAudience] = useState('Classroom');
@@ -732,20 +774,18 @@ export function QuizboardApp({
                 </span>
                 <span>↗</span>
               </button>
-              <p className={styles.microcopy}>
-                You’ll get a board you can review, revise, and host.
-              </p>
+              <p className={styles.microcopy}>{generatorMicrocopy}</p>
             </div>
             <div className={styles.heroCopy}>
               <p className={styles.eyebrow}>
-                <span className={styles.pulse} /> EDITABLE QUIZ BOARD MAKER
+                <span className={styles.pulse} /> {heroEyebrow}
               </p>
               <h1>{heroTitle}</h1>
               <p className={styles.lede}>{heroLede}</p>
               <div className={styles.trustRow}>
-                <span>✦ no account to start</span>
-                <span>✦ 5 × 5 board</span>
-                <span>✦ host or download</span>
+                {trustPoints.map((point) => (
+                  <span key={point}>✦ {point}</span>
+                ))}
               </div>
             </div>
           </section>
@@ -1027,7 +1067,10 @@ export function QuizboardApp({
             </aside>
           )}
           {game && <QualitySummary game={game} />}
-          <InfoSections />
+          <InfoSections
+            workflowSteps={workflowSteps}
+            searchTerms={searchTerms}
+          />
         </main>
       ) : (
         <HostView
@@ -1138,29 +1181,19 @@ function QuestionVisual({
   );
 }
 
-function InfoSections() {
+function InfoSections({
+  workflowSteps,
+  searchTerms,
+}: {
+  workflowSteps: WorkflowStep[];
+  searchTerms: string[];
+}) {
   return (
     <>
       <section className={styles.featureStrip} id="how">
-        {[
-          [
-            '01',
-            'Say what you need',
-            'One plain-language prompt becomes a structured board draft.',
-          ],
-          [
-            '02',
-            'Make it yours',
-            'Edit a question, answer, points, or explanation. Rewrite one square or rebuild the whole board.',
-          ],
-          [
-            '03',
-            'Get the room moving',
-            'Host on a shared screen, reveal answers, and manage team totals.',
-          ],
-        ].map(([num, title, body]) => (
-          <div key={num}>
-            <span className={styles.featureNum}>{num}</span>
+        {workflowSteps.map(({ number, title, body }) => (
+          <div key={number}>
+            <span className={styles.featureNum}>{number}</span>
             <h3>{title}</h3>
             <p>{body}</p>
           </div>
@@ -1169,13 +1202,7 @@ function InfoSections() {
       <section className={styles.keywordBand} id="templates">
         <p className={styles.eyebrow}>MADE FOR THE WAY YOU SEARCH</p>
         <div className={styles.keywordList}>
-          {[
-            'classroom review game',
-            'free quiz board maker',
-            'classroom team quiz',
-            'quiz game generator',
-            'PowerPoint alternative',
-          ].map((keyword) => (
+          {searchTerms.map((keyword) => (
             <span key={keyword}>{keyword}</span>
           ))}
         </div>

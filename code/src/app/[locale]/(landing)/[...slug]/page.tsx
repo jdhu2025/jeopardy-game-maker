@@ -153,6 +153,11 @@ export default async function DynamicPage({
           initialTopic={quizboardPage.topic}
           heroTitle={quizboardPage.h1}
           heroLede={quizboardPage.lede}
+          heroEyebrow={quizboardPage.heroEyebrow}
+          generatorMicrocopy={quizboardPage.generatorMicrocopy}
+          trustPoints={quizboardPage.trustPoints}
+          workflowSteps={quizboardPage.workflowSteps}
+          searchTerms={quizboardPage.searchTerms}
         />
         <SeoPageContent slug={quizboardPage.slug} />
       </>

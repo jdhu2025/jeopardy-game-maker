@@ -62,6 +62,30 @@ export function SeoPageContent({ slug }: { slug: string }) {
                 ))}
               </div>
             )}
+            {page.references && page.references.length > 0 && (
+              <section
+                className={styles.references}
+                aria-labelledby={`${slug}-references`}
+              >
+                <h2 id={`${slug}-references`}>Useful references</h2>
+                <div className={styles.referenceList}>
+                  {page.references.map((reference) => (
+                    <article key={reference.url}>
+                      <h3>
+                        <a
+                          href={reference.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {reference.label}
+                        </a>
+                      </h3>
+                      <p>{reference.description}</p>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
             {page.faqs && page.faqs.length > 0 && (
               <section className={styles.faq} aria-labelledby={`${slug}-faq`}>
                 <h2 id={`${slug}-faq`}>Questions about this quiz workflow</h2>

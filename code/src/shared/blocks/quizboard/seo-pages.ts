@@ -6,11 +6,25 @@ export type QuizboardSeoPage = {
   topic: string;
   h1: string;
   lede: string;
+  heroEyebrow?: string;
+  generatorMicrocopy?: string;
+  trustPoints?: string[];
+  workflowSteps?: Array<{
+    number: string;
+    title: string;
+    body: string;
+  }>;
+  searchTerms?: string[];
   introHeading: string;
   intro: string;
   sections: Array<{ heading: string; body: string }>;
   details?: Array<{ heading: string; body: string; bullets?: string[] }>;
   faqs?: Array<{ question: string; answer: string }>;
+  references?: Array<{
+    label: string;
+    url: string;
+    description: string;
+  }>;
   related: string[];
 };
 
@@ -46,6 +60,34 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
     topic: 'Create a Jeopardy-style classroom review game',
     h1: 'Jeopardy Game Maker for Classrooms, Training, and Teams',
     lede: 'Turn one topic into a playable quiz board, review every question, and host the game on a big screen in minutes.',
+    heroEyebrow: 'JEOPARDY-STYLE BOARD MAKER',
+    generatorMicrocopy:
+      'Start with a topic, then keep the squares that fit your game.',
+    trustPoints: ['5 × 5 board', 'editable questions', 'offline download'],
+    workflowSteps: [
+      {
+        number: '01',
+        title: 'Set the board brief',
+        body: 'Name the topic, audience, and time limit so the first draft has useful boundaries.',
+      },
+      {
+        number: '02',
+        title: 'Tune the question mix',
+        body: 'Keep strong clues, rewrite weak ones, and make higher-value squares require more thinking.',
+      },
+      {
+        number: '03',
+        title: 'Run the board',
+        body: 'Reveal answers, manage team totals, and download a copy when the room cannot rely on the internet.',
+      },
+    ],
+    searchTerms: [
+      'Jeopardy game maker',
+      'online quiz board',
+      'editable game board',
+      'team scoring game',
+      'offline quiz game',
+    ],
     introHeading: 'A faster way to make a Jeopardy-style game',
     intro:
       'Quizboard Maker gives you the familiar categories, points, answers, and team scoring of a Jeopardy-style review game without the spreadsheet or slide-deck setup. Start with a subject, keep the questions that work, and edit anything before you host.',
@@ -93,6 +135,20 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
         question: 'Is this an official Jeopardy product?',
         answer:
           'No. Quizboard Maker creates a category-and-points quiz format for review, training, and group activities.',
+      },
+    ],
+    references: [
+      {
+        label: 'Jeopardy! official site',
+        url: 'https://www.jeopardy.com/',
+        description:
+          'Review the familiar clue, category, and answer-show format that inspires this style of quiz board.',
+      },
+      {
+        label: "Vanderbilt: Bloom's taxonomy",
+        url: 'https://cft.vanderbilt.edu/guides-sub-pages/blooms-taxonomy/',
+        description:
+          'Use levels of remembering, understanding, applying, and analyzing when you set question difficulty.',
       },
     ],
     related: ['how-to-make-a-jeopardy-game', 'classroom-review-game-maker'],
@@ -158,6 +214,38 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
     topic: 'How to make a Jeopardy-style review game',
     h1: 'How to Make a Jeopardy Game: A Practical 3-Step Guide',
     lede: 'Follow a simple workflow to create a board, improve the questions, and run a team game without hand-building every slide.',
+    heroEyebrow: 'PRACTICAL GAME-BUILDING GUIDE',
+    generatorMicrocopy:
+      'Turn the steps below into a board you can edit and host.',
+    trustPoints: [
+      '3-step workflow',
+      'reviewable answers',
+      'shared-screen host',
+    ],
+    workflowSteps: [
+      {
+        number: '01',
+        title: 'Choose the learning target',
+        body: 'Define one subject, skill, chapter, or event outcome before you write categories.',
+      },
+      {
+        number: '02',
+        title: 'Balance clues and answers',
+        body: 'Move from recall to explanation and application while checking that every answer is defensible.',
+      },
+      {
+        number: '03',
+        title: 'Host and learn from the room',
+        body: 'Use the game to spot confusion, pacing problems, and topics that need another explanation.',
+      },
+    ],
+    searchTerms: [
+      'how to make a Jeopardy game',
+      'quiz game lesson plan',
+      'question writing guide',
+      'classroom game format',
+      'team review activity',
+    ],
     introHeading: 'The three parts of a good Jeopardy-style game',
     intro:
       'A useful game needs more than a grid. It needs focused categories, answers that can be checked, and a host view that keeps the room moving. This guide puts those tasks in one workflow.',
@@ -214,6 +302,20 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
         question: 'Should I copy a TV game format exactly?',
         answer:
           'No. Adapt categories, points, timing, and scoring to your group. A classroom or training review should prioritize accurate feedback over imitation.',
+      },
+    ],
+    references: [
+      {
+        label: "Vanderbilt: Bloom's taxonomy",
+        url: 'https://cft.vanderbilt.edu/guides-sub-pages/blooms-taxonomy/',
+        description:
+          'A useful framework for moving a question set from recall toward explanation, application, and analysis.',
+      },
+      {
+        label: 'Cornell: active learning',
+        url: 'https://teaching.cornell.edu/teaching-resources/engaging-students/active-learning',
+        description:
+          'Connect the game to discussion, retrieval, and visible participation rather than passive presentation.',
       },
     ],
     related: ['jeopardy-game-maker', 'classroom-review-game-maker'],
@@ -304,6 +406,34 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
     topic: 'Grade 7 classroom review game',
     h1: 'Classroom Review Game Maker for Teachers',
     lede: 'Turn a lesson or unit into an interactive review board that is easy to project, edit, and play with student teams.',
+    heroEyebrow: 'CLASSROOM REVIEW WORKFLOW',
+    generatorMicrocopy:
+      'Start with your unit, then align every question to what students learned.',
+    trustPoints: ['grade-level prompts', 'teacher review', 'team scoring'],
+    workflowSteps: [
+      {
+        number: '01',
+        title: 'Name the unit',
+        body: 'Add the grade, subject, chapter, and learning target from the lesson students actually received.',
+      },
+      {
+        number: '02',
+        title: 'Check curriculum fit',
+        body: 'Review vocabulary, examples, reading level, answer accuracy, and point values before class.',
+      },
+      {
+        number: '03',
+        title: 'Use play as feedback',
+        body: 'Notice which categories create discussion or hesitation, then use that evidence to plan the next lesson.',
+      },
+    ],
+    searchTerms: [
+      'classroom review game',
+      'teacher quiz maker',
+      'unit review activity',
+      'student team game',
+      'formative assessment game',
+    ],
     introHeading: 'Designed around the teacher’s review workflow',
     intro:
       'Start with a grade, subject, chapter, or learning goal. The board gives you a fast first draft while the review tools keep the final questions aligned with your class.',
@@ -355,6 +485,20 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
         question: 'What should I do when a question is unclear?',
         answer:
           'Rewrite or remove it before hosting. A review game should make the learning target clearer, not turn scoring into a debate about wording.',
+      },
+    ],
+    references: [
+      {
+        label: 'CAST: Universal Design for Learning Guidelines',
+        url: 'https://udlguidelines.cast.org/',
+        description:
+          'Use multiple ways for students to engage, respond, and show what they understand during review.',
+      },
+      {
+        label: 'Cornell: active learning',
+        url: 'https://teaching.cornell.edu/teaching-resources/engaging-students/active-learning',
+        description:
+          'Plan the board as an active discussion routine, with students explaining answers instead of only selecting squares.',
       },
     ],
     related: ['jeopardy-game-maker', 'how-to-make-a-jeopardy-game'],
