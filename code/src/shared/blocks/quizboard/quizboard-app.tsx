@@ -87,6 +87,8 @@ type WorkflowStep = {
   body: string;
 };
 
+type LandingPageType = 'maker' | 'guide' | 'classroom';
+
 const defaultWorkflowSteps: WorkflowStep[] = [
   {
     number: '01',
@@ -162,7 +164,8 @@ export function QuizboardApp({
   generatorMicrocopy = 'You’ll get a board you can review, revise, and host.',
   trustPoints = ['no account to start', '5 × 5 board', 'host or download'],
   workflowSteps = defaultWorkflowSteps,
-  searchTerms = defaultSearchTerms,
+  pageType = 'maker',
+  pageHighlights = defaultSearchTerms,
 }: {
   initialTopic?: string;
   initialGame?: Game;
@@ -174,7 +177,8 @@ export function QuizboardApp({
   generatorMicrocopy?: string;
   trustPoints?: string[];
   workflowSteps?: WorkflowStep[];
-  searchTerms?: string[];
+  pageType?: LandingPageType;
+  pageHighlights?: string[];
 }) {
   const [topic, setTopic] = useState(initialTopic);
   const [audience, setAudience] = useState('Classroom');
@@ -673,13 +677,99 @@ export function QuizboardApp({
       </header>
       {!hostMode ? (
         <main>
-          <section className={styles.hero}>
-            <div className={styles.generatorCard}>
+          <section
+            className={`${styles.hero} ${
+              pageType === 'guide'
+                ? styles.heroGuide
+                : pageType === 'classroom'
+                  ? styles.heroClassroom
+                  : styles.heroMaker
+            }`}
+          >
+            {pageType === 'guide' && (
+              <div className={styles.guideIntro}>
+                <div className={styles.cardTopline}>
+                  <span>READ FIRST / BUILDING CHECKLIST</span>
+                  <span className={styles.savedState}>3 steps</span>
+                </div>
+                <p className={styles.eyebrow}>{heroEyebrow}</p>
+                <h1>{heroTitle}</h1>
+                <h2>Make the game around the learning goal, not the grid.</h2>
+                <p>
+                  A strong Jeopardy-style activity starts with one outcome, then
+                  turns that outcome into answerable clues. Use the guide below
+                  to plan the board before you open the maker.
+                </p>
+                <ol>
+                  {workflowSteps.map((step) => (
+                    <li key={step.number}>
+                      <span>{step.number}</span>
+                      <div>
+                        <strong>{step.title}</strong>
+                        <p>{step.body}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+                <a className={styles.guideAction} href="#builder">
+                  Open the board maker <span>↓</span>
+                </a>
+              </div>
+            )}
+            {pageType === 'classroom' && (
+              <div className={styles.classroomBrief}>
+                <div className={styles.cardTopline}>
+                  <span>TEACHER BRIEF / BEFORE CLASS</span>
+                  <span className={styles.savedState}>unit review</span>
+                </div>
+                <p className={styles.eyebrow}>{heroEyebrow}</p>
+                <h1>{heroTitle}</h1>
+                <h2>
+                  Turn yesterday&apos;s lesson into today&apos;s retrieval
+                  practice.
+                </h2>
+                <p>
+                  Start with the exact unit students saw. Set the grade, topic,
+                  and learning target, then use the board to surface vocabulary,
+                  misconceptions, and explanations worth revisiting.
+                </p>
+                <div className={styles.briefGrid}>
+                  <div>
+                    <strong>01</strong>
+                    <span>Set the unit boundary</span>
+                  </div>
+                  <div>
+                    <strong>02</strong>
+                    <span>Check reading level</span>
+                  </div>
+                  <div>
+                    <strong>03</strong>
+                    <span>Discuss the answers</span>
+                  </div>
+                </div>
+                <a className={styles.guideAction} href="#builder">
+                  Prepare a classroom board <span>↓</span>
+                </a>
+              </div>
+            )}
+            <div className={styles.generatorCard} id="builder">
               <div className={styles.cardTopline}>
-                <span>01 / CREATE A GAME</span>
+                <span>
+                  {pageType === 'guide'
+                    ? '02 / BUILD FROM THE GUIDE'
+                    : pageType === 'classroom'
+                      ? '01 / PLAN A CLASS REVIEW'
+                      : '01 / CREATE A GAME'}
+                </span>
                 <span className={styles.savedState}>{status}</span>
               </div>
-              <label htmlFor="topic">What should this game be about?</label>
+              <label htmlFor="topic">
+                {pageType === 'guide'
+                  ? 'Which learning target will the game practice?'
+                  : pageType === 'classroom'
+                    ? 'Which unit should students review?'
+                    : 'What should this game be about?'}
+              </label>
               <textarea
                 id="topic"
                 rows={4}
@@ -690,10 +780,22 @@ export function QuizboardApp({
                   trackQuizboardEvent('topic_input_started');
                 }}
                 onChange={(event) => setTopic(event.target.value)}
-                placeholder="e.g. Grade 7 weather systems"
+                placeholder={
+                  pageType === 'guide'
+                    ? 'e.g. Explain the causes of the American Revolution'
+                    : pageType === 'classroom'
+                      ? 'e.g. Grade 7 weather systems: fronts and forecasts'
+                      : 'e.g. Grade 7 weather systems'
+                }
               />
               <div className={styles.topicLibrary}>
-                <span>Browse a subject</span>
+                <span>
+                  {pageType === 'classroom'
+                    ? 'Start from a classroom seed'
+                    : pageType === 'guide'
+                      ? 'Start from a focused outcome'
+                      : 'Browse a subject'}
+                </span>
                 <div className={styles.topicChips}>
                   {topicSuggestions.map((suggestion) => (
                     <button
@@ -776,18 +878,20 @@ export function QuizboardApp({
               </button>
               <p className={styles.microcopy}>{generatorMicrocopy}</p>
             </div>
-            <div className={styles.heroCopy}>
-              <p className={styles.eyebrow}>
-                <span className={styles.pulse} /> {heroEyebrow}
-              </p>
-              <h1>{heroTitle}</h1>
-              <p className={styles.lede}>{heroLede}</p>
-              <div className={styles.trustRow}>
-                {trustPoints.map((point) => (
-                  <span key={point}>✦ {point}</span>
-                ))}
+            {pageType === 'maker' && (
+              <div className={styles.heroCopy}>
+                <p className={styles.eyebrow}>
+                  <span className={styles.pulse} /> {heroEyebrow}
+                </p>
+                <h1>{heroTitle}</h1>
+                <p className={styles.lede}>{heroLede}</p>
+                <div className={styles.trustRow}>
+                  {trustPoints.map((point) => (
+                    <span key={point}>✦ {point}</span>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </section>
           {game && (
             <section className={styles.workbench} id="review">
@@ -1069,7 +1173,8 @@ export function QuizboardApp({
           {game && <QualitySummary game={game} />}
           <InfoSections
             workflowSteps={workflowSteps}
-            searchTerms={searchTerms}
+            pageType={pageType}
+            pageHighlights={pageHighlights}
           />
         </main>
       ) : (
@@ -1183,27 +1288,72 @@ function QuestionVisual({
 
 function InfoSections({
   workflowSteps,
-  searchTerms,
+  pageType,
+  pageHighlights,
 }: {
   workflowSteps: WorkflowStep[];
-  searchTerms: string[];
+  pageType: LandingPageType;
+  pageHighlights: string[];
 }) {
   return (
     <>
-      <section className={styles.featureStrip} id="how">
-        {workflowSteps.map(({ number, title, body }) => (
-          <div key={number}>
-            <span className={styles.featureNum}>{number}</span>
-            <h3>{title}</h3>
-            <p>{body}</p>
+      {pageType === 'maker' && (
+        <section className={styles.featureStrip} id="how">
+          {workflowSteps.map(({ number, title, body }) => (
+            <div key={number}>
+              <span className={styles.featureNum}>{number}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </div>
+          ))}
+        </section>
+      )}
+      {pageType === 'guide' && (
+        <section className={styles.guideStrip} id="how">
+          <div>
+            <p className={styles.eyebrow}>CHECK THE BOARD BEFORE PLAY</p>
+            <h2>A playable format still needs editorial judgment.</h2>
           </div>
-        ))}
-      </section>
+          <ol>
+            <li>Remove duplicate clues and vague wording.</li>
+            <li>Make higher values require more reasoning.</li>
+            <li>Publish the answer standard before scoring.</li>
+          </ol>
+        </section>
+      )}
+      {pageType === 'classroom' && (
+        <section className={styles.classroomStrip} id="how">
+          <div>
+            <p className={styles.eyebrow}>A CLASSROOM USE CASE</p>
+            <h2>Use the board as a conversation map.</h2>
+          </div>
+          <div className={styles.classroomColumns}>
+            <p>
+              <strong>Before:</strong> choose a unit and define what success
+              looks like.
+            </p>
+            <p>
+              <strong>During:</strong> ask teams to explain, not only name, an
+              answer.
+            </p>
+            <p>
+              <strong>After:</strong> reteach the category where confidence
+              breaks down.
+            </p>
+          </div>
+        </section>
+      )}
       <section className={styles.keywordBand} id="templates">
-        <p className={styles.eyebrow}>MADE FOR THE WAY YOU SEARCH</p>
+        <p className={styles.eyebrow}>
+          {pageType === 'maker'
+            ? 'WAYS TO USE A CUSTOM BOARD'
+            : pageType === 'guide'
+              ? 'PLANNING CHECKPOINTS'
+              : 'WHAT THIS SUPPORTS IN CLASS'}
+        </p>
         <div className={styles.keywordList}>
-          {searchTerms.map((keyword) => (
-            <span key={keyword}>{keyword}</span>
+          {pageHighlights.map((highlight) => (
+            <span key={highlight}>{highlight}</span>
           ))}
         </div>
       </section>

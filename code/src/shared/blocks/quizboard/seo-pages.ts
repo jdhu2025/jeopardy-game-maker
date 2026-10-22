@@ -1,5 +1,6 @@
 export type QuizboardSeoPage = {
   slug: string;
+  pageType?: 'maker' | 'guide' | 'classroom';
   keyword: string;
   title: string;
   description: string;
@@ -14,7 +15,11 @@ export type QuizboardSeoPage = {
     title: string;
     body: string;
   }>;
-  searchTerms?: string[];
+  pageHighlights?: string[];
+  contentEyebrow?: string;
+  faqHeading?: string;
+  referencesHeading?: string;
+  relatedHeading?: string;
   introHeading: string;
   intro: string;
   sections: Array<{ heading: string; body: string }>;
@@ -53,10 +58,11 @@ export const quizboardSeoRedirects: Record<string, string> = {
 export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
   'jeopardy-game-maker': {
     slug: 'jeopardy-game-maker',
+    pageType: 'maker',
     keyword: 'jeopardy game maker',
     title: 'Jeopardy Game Maker | Create Online Quiz Boards in Minutes',
     description:
-      'Create a Jeopardy-style quiz board from a topic, review every answer, host it on a shared screen, or download an offline game.',
+      'Create a Jeopardy-style quiz board from a topic, edit every question, host it with teams, and download an offline game for class, training, or trivia.',
     topic: 'Create a Jeopardy-style classroom review game',
     h1: 'Jeopardy Game Maker for Classrooms, Training, and Teams',
     lede: 'Turn one topic into a playable quiz board, review every question, and host the game on a big screen in minutes.',
@@ -81,13 +87,16 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
         body: 'Reveal answers, manage team totals, and download a copy when the room cannot rely on the internet.',
       },
     ],
-    searchTerms: [
-      'Jeopardy game maker',
-      'online quiz board',
-      'editable game board',
-      'team scoring game',
-      'offline quiz game',
+    pageHighlights: [
+      'Classroom review',
+      'Staff training',
+      'Family trivia',
+      'Offline host mode',
     ],
+    contentEyebrow: 'THE BOARD-MAKER WORKFLOW',
+    faqHeading: 'Questions about making a quiz board',
+    referencesHeading: 'References for better quiz questions',
+    relatedHeading: 'Choose another quiz workflow',
     introHeading: 'A faster way to make a Jeopardy-style game',
     intro:
       'Quizboard Maker gives you the familiar categories, points, answers, and team scoring of a Jeopardy-style review game without the spreadsheet or slide-deck setup. Start with a subject, keep the questions that work, and edit anything before you host.',
@@ -207,10 +216,11 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
   },
   'how-to-make-a-jeopardy-game': {
     slug: 'how-to-make-a-jeopardy-game',
+    pageType: 'guide',
     keyword: 'how to make a jeopardy game',
     title: 'How to Make a Jeopardy Game | Online Tutorial and Maker',
     description:
-      'Learn how to make a Jeopardy-style game in three steps, from topic and questions to review, team setup, and live hosting.',
+      'Learn how to make a Jeopardy-style game: choose a learning target, write balanced clues, review answers, and host a fair team activity online or offline.',
     topic: 'How to make a Jeopardy-style review game',
     h1: 'How to Make a Jeopardy Game: A Practical 3-Step Guide',
     lede: 'Follow a simple workflow to create a board, improve the questions, and run a team game without hand-building every slide.',
@@ -239,13 +249,16 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
         body: 'Use the game to spot confusion, pacing problems, and topics that need another explanation.',
       },
     ],
-    searchTerms: [
-      'how to make a Jeopardy game',
-      'quiz game lesson plan',
-      'question writing guide',
-      'classroom game format',
-      'team review activity',
+    pageHighlights: [
+      'Learning target first',
+      'Balanced clue difficulty',
+      'Answer-key review',
+      'Fair team play',
     ],
+    contentEyebrow: 'A PRACTICAL BUILDING GUIDE',
+    faqHeading: 'Common questions about the game-building process',
+    referencesHeading: 'Teaching references used in this guide',
+    relatedHeading: 'Continue with a ready-to-use workflow',
     introHeading: 'The three parts of a good Jeopardy-style game',
     intro:
       'A useful game needs more than a grid. It needs focused categories, answers that can be checked, and a host view that keeps the room moving. This guide puts those tasks in one workflow.',
@@ -399,10 +412,11 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
   },
   'classroom-review-game-maker': {
     slug: 'classroom-review-game-maker',
+    pageType: 'classroom',
     keyword: 'classroom review game maker',
-    title: 'Classroom Review Game Maker | Editable Quiz Boards for Teachers',
+    title: 'Classroom Review Game Maker | Teacher Quiz Boards',
     description:
-      'Build a classroom review game for a grade, subject, and chapter. Generate questions, review answers, and host with team scoring.',
+      'Build a classroom review game for a grade, subject, and chapter. Align questions to your lesson, review answers, and host a teacher-controlled team activity.',
     topic: 'Grade 7 classroom review game',
     h1: 'Classroom Review Game Maker for Teachers',
     lede: 'Turn a lesson or unit into an interactive review board that is easy to project, edit, and play with student teams.',
@@ -427,13 +441,16 @@ export const quizboardSeoPages: Record<string, QuizboardSeoPage> = {
         body: 'Notice which categories create discussion or hesitation, then use that evidence to plan the next lesson.',
       },
     ],
-    searchTerms: [
-      'classroom review game',
-      'teacher quiz maker',
-      'unit review activity',
-      'student team game',
-      'formative assessment game',
+    pageHighlights: [
+      'Unit review',
+      'Retrieval practice',
+      'Student discussion',
+      'Teacher-controlled scoring',
     ],
+    contentEyebrow: 'THE TEACHER REVIEW ROUTINE',
+    faqHeading: 'Questions about classroom review games',
+    referencesHeading: 'Teaching references for active review',
+    relatedHeading: 'Explore the other quiz workflows',
     introHeading: 'Designed around the teacher’s review workflow',
     intro:
       'Start with a grade, subject, chapter, or learning goal. The board gives you a fast first draft while the review tools keep the final questions aligned with your class.',

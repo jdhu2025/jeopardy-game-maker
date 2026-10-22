@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { envConfigs } from '@/config';
+
 import styles from './seo-page-content.module.css';
 import { indexableQuizboardSeoSlugs, quizboardSeoPages } from './seo-pages';
 
@@ -7,18 +9,53 @@ export function SeoPageContent({ slug }: { slug: string }) {
   const page = quizboardSeoPages[slug];
   if (!page) return null;
 
+  const baseUrl = envConfigs.app_url.replace(/\/$/, '');
+  const pageUrl = `${baseUrl}/${page.slug}`;
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'Quizboard Maker',
-    applicationCategory: 'EducationalApplication',
-    operatingSystem: 'Web',
-    description: page.description,
-    featureList: [
-      'Topic-based quiz board drafts',
-      'Question and answer review',
-      'Team scoring and host mode',
-      'Offline quiz game download',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: page.title,
+        description: page.description,
+        isPartOf: { '@id': `${baseUrl}#website` },
+        about: { '@id': `${baseUrl}#quizboard-maker` },
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': `${baseUrl}#quizboard-maker`,
+        name: 'Quizboard Maker',
+        url: baseUrl,
+        applicationCategory: 'EducationalApplication',
+        operatingSystem: 'Web',
+        description:
+          'A web application for creating, reviewing, and hosting editable quiz boards.',
+        featureList: [
+          'Topic-based quiz board drafts',
+          'Question and answer review',
+          'Team scoring and host mode',
+          'Offline quiz game download',
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Quizboard Maker',
+            item: baseUrl,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: page.keyword,
+            item: pageUrl,
+          },
+        ],
+      },
     ],
   };
 
@@ -34,7 +71,9 @@ export function SeoPageContent({ slug }: { slug: string }) {
       >
         <div className={styles.inner}>
           <div className={styles.copy}>
-            <p className={styles.eyebrow}>ABOUT THIS QUIZ BOARD WORKFLOW</p>
+            <p className={styles.eyebrow}>
+              {page.contentEyebrow || 'QUIZ BOARD WORKFLOW'}
+            </p>
             <h2 id={`${slug}-content-title`}>{page.introHeading}</h2>
             <p className={styles.intro}>{page.intro}</p>
             <div className={styles.grid}>
@@ -67,7 +106,9 @@ export function SeoPageContent({ slug }: { slug: string }) {
                 className={styles.references}
                 aria-labelledby={`${slug}-references`}
               >
-                <h2 id={`${slug}-references`}>Useful references</h2>
+                <h2 id={`${slug}-references`}>
+                  {page.referencesHeading || 'Useful references'}
+                </h2>
                 <div className={styles.referenceList}>
                   {page.references.map((reference) => (
                     <article key={reference.url}>
@@ -88,7 +129,9 @@ export function SeoPageContent({ slug }: { slug: string }) {
             )}
             {page.faqs && page.faqs.length > 0 && (
               <section className={styles.faq} aria-labelledby={`${slug}-faq`}>
-                <h2 id={`${slug}-faq`}>Questions about this quiz workflow</h2>
+                <h2 id={`${slug}-faq`}>
+                  {page.faqHeading || 'Questions about this quiz workflow'}
+                </h2>
                 {page.faqs.map((faq) => (
                   <details key={faq.question}>
                     <summary>{faq.question}</summary>
@@ -101,7 +144,7 @@ export function SeoPageContent({ slug }: { slug: string }) {
               className={styles.related}
               aria-label="Related quiz maker pages"
             >
-              <h2>Explore related quiz maker pages</h2>
+              <h2>{page.relatedHeading || 'Explore related quiz pages'}</h2>
               <div>
                 {page.related
                   .filter((relatedSlug) =>

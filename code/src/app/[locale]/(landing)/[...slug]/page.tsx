@@ -157,7 +157,8 @@ export default async function DynamicPage({
           generatorMicrocopy={quizboardPage.generatorMicrocopy}
           trustPoints={quizboardPage.trustPoints}
           workflowSteps={quizboardPage.workflowSteps}
-          searchTerms={quizboardPage.searchTerms}
+          pageType={quizboardPage.pageType}
+          pageHighlights={quizboardPage.pageHighlights}
         />
         <SeoPageContent slug={quizboardPage.slug} />
       </>
