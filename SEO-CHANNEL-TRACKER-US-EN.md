@@ -2,7 +2,7 @@
 
 > Owner：Codex（SEO 执行）  
 > 建立日期：2026-10-13  
-> 当前门禁：产品文案校准已在线验证；外部渠道仍因 GA4/Clarity、人工模板审阅、截图/演示和主体资料未齐而不得提交。状态只按证据更新，不以准备工作冒充发布结果。
+> 当前门禁：产品文案校准和 GA4/Clarity 线上加载已验证；外部渠道仍因人工模板审阅、截图/演示和主体资料未齐而不得提交。状态只按证据更新，不以准备工作冒充发布结果。
 
 ## 状态定义
 
@@ -12,7 +12,7 @@
 
 | Channel | Audience / fit | Target page | UTM URL | Status | Evidence | Next action |
 |---|---|---|---|---|---|---|
-| Product Hunt | 英语早期产品用户、教育工具发现 | `/jeopardy-game-maker` | `https://www.quizboardly.xyz/jeopardy-game-maker?utm_source=producthunt.com&utm_medium=referral&utm_campaign=launch_2026q4` | blocked | 2026-10-27 线上已无旧 AI/QR 宣称；仍无最终产品截图/演示，且 GA4/Clarity 未配置 | 补截图和 30-60 秒真实演示，再由产品所有者确认发布日期 |
+| Product Hunt | 英语早期产品用户、教育工具发现 | `/jeopardy-game-maker` | `https://www.quizboardly.xyz/jeopardy-game-maker?utm_source=producthunt.com&utm_medium=referral&utm_campaign=launch_2026q4` | blocked | 2026-10-27 线上已无旧 AI/QR 宣称；GA4/Clarity 已配置并线上加载，但仍无最终产品截图/演示 | 补截图和 30-60 秒真实演示，再由产品所有者确认发布日期 |
 | Indie Hackers | 独立开发者、产品构建过程 | `/how-to-make-a-jeopardy-game` | `https://www.quizboardly.xyz/how-to-make-a-jeopardy-game?utm_source=indiehackers.com&utm_medium=referral&utm_campaign=launch_2026q4` | blocked | 构建故事文案和线上“starter board -> review -> host”流程已具备；缺品牌账号和可公开的截图/演示 | 由产品所有者确认账号后发布，不写排名/收入/用户数 |
 | AlternativeTo | 主动寻找 quiz/slide 替代方案的用户 | `/jeopardy-game-maker` | `https://www.quizboardly.xyz/jeopardy-game-maker?utm_source=alternativeto.net&utm_medium=referral&utm_campaign=launch_2026q4` | blocked | 产品定位与免责声明已准备；尚未确认最终比较对象 | 部署后只提交能完成同一核心任务的真实替代关系 |
 | SaaSHub | 软件目录与产品实体信号 | `/` | `https://www.quizboardly.xyz/?utm_source=saashub.com&utm_medium=referral&utm_campaign=launch_2026q4` | blocked | 描述、logo、分类已准备；支持邮箱和定价未验证 | 取得品牌账号/支持邮箱，未知字段留空，不虚构团队与指标 |
@@ -40,6 +40,6 @@
 | Date | Channel | Old status | New status | Evidence URL / screenshot | Referral users | `generate_completed` | Qualified reply | Decision / next action |
 |---|---|---|---|---|---:|---:|---|---|
 | 2026-10-13 | All first-batch channels | researching | blocked | 生产核验：旧版仍有 AI/QR 宣称；本地修正待部署 | 0 | 0 | No | 部署与测量通过后再提交 |
-| 2026-10-27 | All first-batch channels | blocked | blocked | bb-browser：4 个核心页和匿名核心流程已在线通过；GA4/Clarity 未配置，模板未人工审阅，无外链发布证据 | 0 | 0 | No | 先完成测量、模板审阅和主体资料，再由产品所有者选择首批渠道 |
+| 2026-10-27 | All first-batch channels | blocked | blocked | bb-browser：4 个核心页和匿名核心流程已在线通过；GA4/Clarity 已配置并线上加载，模板未人工审阅，无外链发布证据 | 0 | 0 | No | 先完成 DebugView/Clarity 控制台确认、模板审阅和主体资料，再由产品所有者选择首批渠道 |
 
 执行规则：提交 7 天后只跟进一次；30 天无审核、无相关访问且无目标用户回复时标记 `stopped`。nofollow 链接可保留，只要有真实目标用户访问或有效回复；不得购买链接、交换 dofollow 或伪造评价。
