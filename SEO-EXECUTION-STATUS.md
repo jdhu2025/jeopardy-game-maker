@@ -3,22 +3,25 @@
 > 关联计划：[SEO-EXECUTION-PLAN-US-EN.md](./SEO-EXECUTION-PLAN-US-EN.md)  
 > 执行负责人：Codex  
 > 开始日期：2026-10-13  
-> 当前阶段：W1 / Day 1，进行中
+> 证据截止：2026-10-27
+> 当前阶段：W3 / Day 15，进行中
 
 ## 当前总览
 
 | 工作流                         | 状态               | 已验证结果                                                                                                                                                    | 下一步                                                                                  |
 | ------------------------------ | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| 生产站可抓取性核验             | 已完成首轮         | 浏览器逐页检查 4 个核心 URL：均可加载、唯一 H1、自指 canonical、`index, follow`、`lang=en`，正文可在 DOM 中读取；www/HTTPS 与近义 URL 重定向正确              | 部署本轮修改后重跑同一检查，并以 GSC URL Inspection 补齐 Google 视角                    |
-| GSC / Bing 验证与 sitemap 提交 | 等待账号访问       | 当前工作区没有 Search Console 或 Bing Webmaster Tools 凭证/会话；未声称已提交                                                                                 | 由具备域名/DNS 或已登录账号的人员完成验证；随后记录属性、提交日期和 URL Inspection 结果 |
-| GA4 / Clarity 生产配置         | 阻塞：未配置       | 生产页未发现 GA4 或 Clarity 脚本，`window.gtag` 不存在；当前没有可读取的真实流量/录屏数据                                                                     | 在生产管理后台填写 ID；检查隐私/同意要求，再用 DebugView 验证下方事件                   |
-| 漏斗埋点                       | 已完成，待部署     | 已加入 9 个不含用户内容的客户端事件；gtag 未加载时事件会进入 `dataLayer` 队列                                                                                 | 部署后完成一次生成流程，在 GA4 DebugView 验证                                           |
-| 用户反馈可靠性                 | 已完成，待部署     | 反馈 UI 过去即使 API 失败也会显示成功；现已改为只在 API 返回成功后显示成功并计数事件                                                                          | 部署后从匿名会话提交一次测试反馈并确认后台记录                                          |
-| 产品承诺校准                   | 本地已修，待部署   | 生产生成可得到 25 题，但返回 starter-board fallback；生产页仍写 AI、分享码/QR 等未完全兑现承诺。本地已改成 `editable/topic-based drafts` 并移除跨设备房间承诺 | 部署后再次截图和跑完整流程；通过前不对外使用 AI/实时多人宣称                            |
-| 外链发布                       | 素材就绪，尚未提交 | 发布文案与渠道追踪表已准备；未创建账号、未向外部平台提交，避免传播尚未部署的旧承诺                                                                            | 部署并完成生产回归后，按追踪表逐项提交；对外发布前由产品所有者确认账户身份与最终文案    |
-| 真实用户反馈                   | 尚无样本           | 当前无 GSC/GA4/访谈数据，因此没有可报告的用户结论                                                                                                             | W2 招募并完成 5 次可用性测试；原话记录到反馈表                                          |
+| 生产站可抓取性核验             | 已完成（线上复核） | 2026-10-27 用 bb-browser 复核 4 个核心 URL：均为 200、唯一 H1、自指 canonical、`index, follow`、`lang=en`，正文和结构化数据可读；sitemap、robots 返回 200；HTTP、非 www、`/zh` 和近义 URL 归一正确；用户随后提供 GSC 逐 URL 收录截图 | 部署后版本变更再抽查；Google 的 canonical/抓取细节以 URL Inspection 展开项为准 |
+| GSC / Bing 验证与 sitemap 提交 | GSC 已完成；Bing 未验证 | 用户提供的 4 张 GSC URL Inspection 截图分别确认首页、`/jeopardy-game-maker`、`/how-to-make-a-jeopardy-game`、`/classroom-review-game-maker` 均“网址已收录到 Google”；sitemap 截图显示上次读取 `2026/10/23`、已发现网页 `4`；Bing 无证据 | 保留 GSC 证据；Bing 由有权限的人验证，或明确暂不接入 |
+| GA4 / Clarity 生产配置         | GA4 已保存；线上待刷新；Clarity 未配置 | 用户提供的 Measurement ID `G-690K2CQ0PF` 已写入生产配置表，并通过新管理员账号在 `/admin/settings/analytics` 保存，页面提示 `Settings updated`；当前公网页面仍检查到 `window.gtag`、`window.clarity` 均不存在 | 部署配置缓存刷新修正后重新检查 GA4；另行创建并填写 Clarity ID，再用 DebugView/Clarity 实时会话验证 |
+| 漏斗埋点                       | 代码完成；线上队列已验证，GA4 待脚本加载 | 源码含 9 个不含用户内容的事件；生产首页可观察到 `landing_view` 进入 `dataLayer`，但当前没有 gtag 消费队列，因此不能声称 GA4 已收到 | 部署后确认脚本加载，再完成一次匿名漏斗回归并把 DebugView 结果填入下方清单 |
+| 用户反馈可靠性                 | 代码完成；生产回归待做 | 反馈 UI 只在 `/api/feedback` 返回 2xx 后关闭并显示成功，失败时保留输入并显示失败；当前尚未在生产提交测试反馈并确认后台记录 | 人工提交一次不含敏感内容的测试反馈，确认后台记录后更新状态 |
+| 产品承诺校准                   | 已完成并线上验证   | 2026-10-27 线上 4 个核心页均使用 editable/topic-based board 文案；未发现旧的 AI-powered、Join room、QR 或跨设备实时承诺；当前页面展示生成、审核、主持和离线下载 | 后续若重新启用 AI 或实时能力，必须先完成能力验证再恢复文案 |
+| 外链发布                       | 未发布；仍受人工门禁阻塞 | 发布文案与渠道追踪表已准备；追踪表仍无 contacted、published URL、referral 或 qualified reply 证据；生产文案已校准，但截图/演示、支持邮箱、产品主体和模板审阅仍不完整 | 由产品所有者确认品牌账号、支持邮箱、最终文案和首批渠道；之后逐项提交并记录 URL/UTM/referral |
+| 真实用户反馈                   | 尚无样本           | 已有 GSC 索引/搜索截图，但没有 GA4/Clarity/访谈或 referral 样本，因此仍没有可报告的用户行为结论 | W2 招募并完成 5 次可用性测试；原话记录到反馈表 |
 
 ## 已完成的 Day 1 工作
+
+以下表格保留 2026-10-13 当时的历史记录；当前状态以 2026-10-27 复核结果为准。
 
 | 时间       | 动作                                                  | 状态               | 证据/结果                                                                                                                                                                                                                                             |
 | ---------- | ----------------------------------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -45,7 +48,27 @@
 | 2026-10-13 | 移除伪实时多人界面                                    | 完成，待部署       | 删除公开的 Join room、固定房间码、QR 和本地等待页；核心可索引页改为真实的 shared-screen host + team scoring + offline download。                                                                                                                       |
 | 2026-10-13 | 部署前本地服务回归                                    | 环境阻塞           | production build 已生成，但沙箱拒绝绑定 `127.0.0.1:3100`（`EPERM`）；因此本轮以构建、类型、lint、格式和源码断言作为部署前证据，交互回归必须在部署后完成。                                                                                             |
 | 2026-10-13 | 三个模板 starter 能力补齐                             | 完成，待人工审阅   | Weather、US History、Workplace Safety 均命中专用主题画像；自动检查确认每个 starter 为 5 类/25 题、无空字段和重复 prompt。模板仍按 [SEO-TEMPLATE-QA-BACKLOG.md](./SEO-TEMPLATE-QA-BACKLOG.md) 阻塞发布，不能把自动草稿标成已审核。                     |
-| 2026-10-13 | 关系型外联候选研究                                    | 完成首轮           | 渠道追踪表已列出 10 个教师/L&D 候选及逐项研究条件；尚未联系、未提交、未产生 referral，成果指标仍为 0。                                                                                                                                               |
+| 2026-10-27 | 关系型外联候选研究                                    | 完成首轮研究，未进入外联 | 渠道追踪表仍列出 10 个教师/L&D 候选；没有联系、提交、published URL、referral 或 qualified reply 证据。它是研究完成，不是外链发布完成。                                                                                                           |
+
+## 2026-10-27 复核结果
+
+本节只记录本轮可复核证据；“已上线”不等于“已被 Google 收录”，收录数量以用户提供的 Search Console 截图为准。
+
+| 检查项 | 结果 | 证据 | 仍需人工确认 |
+| --- | --- | --- | --- |
+| 4 个核心 URL 线上可访问 | 已确认 | bb-browser 逐页读取 `/`、`/jeopardy-game-maker`、`/how-to-make-a-jeopardy-game`、`/classroom-review-game-maker`，均返回 HTTP 200 | 无 |
+| 线上 SEO 基础元素 | 已确认 | 4 页均有唯一 H1、`lang=en`、`index, follow`、自指 canonical、description；4 页均有 JSON-LD；GSC URL Inspection 已确认 4 页可出现在 Google | 截图未展开的 Google-selected canonical、最后抓取时间和 sitemap discovery 详情仍不作推断 |
+| sitemap / robots | 已确认 | `https://www.quizboardly.xyz/google-sitemap.xml` 和 `/robots.txt` 均返回 200；robots 只声明该 sitemap，sitemap 列出 4 个公开 URL；用户提供的 GSC sitemap 截图显示上次读取 `2026/10/23`、已发现网页 `4` | 无；如需持续监控，后续记录新的 last read 日期 |
+| URL 归一 | 已确认 | 非 www、HTTP、`/zh/jeopardy-game-maker`、`/free-jeopardy-game-maker` 访问后均归一至 `/jeopardy-game-maker` | 无 |
+| Google 索引数量 | 已确认 4 个具体 URL | 用户提供的 4 张 GSC URL Inspection 截图分别显示：首页、`/jeopardy-game-maker`、`/how-to-make-a-jeopardy-game`、`/classroom-review-game-maker` 均“网址已收录到 Google”；页面索引编制均显示“网页已编入索引” | 截图未展开 Google-selected canonical、最后抓取时间和 sitemap discovery 详情；这些不是当前收录结论的阻塞项 |
+| 产品文案上线 | 已确认 | 线上页面已显示 editable/topic-based board、review、host、offline download；未发现旧 AI/QR/Join room 文案 | 无；重新部署后需抽查 |
+| 匿名核心流程 | 已确认 | 线上完成“输入主题 -> 生成 25 题 -> Review -> Start game -> 返回 Review -> Download offline game”；页面状态分别显示 `Board ready`、主持界面和 `Offline game downloaded` | 反馈失败路径仍需一次不敏感内容的人工回归 |
+| GA4 / Clarity | GA4 已保存，线上待刷新；Clarity 未配置 | GA4 ID 已通过管理员设置保存；bb-browser 复核公网首页仍为 `window.gtag`、`window.clarity` undefined，相关脚本为空 | 部署 `revalidatePath` 修正后重新复核 GA4；创建 Clarity 项目并填写 ID |
+| 漏斗事件代码 | 已确认代码和首事件队列 | 代码有 9 个事件；线上首页可见 `dataLayer` 中的 `landing_view`，但没有 GA4 消费者 | 配置 GA4 后验证完整漏斗 |
+| 模板 starter 自动质量 | 已确认自动门槛 | `node --import tsx scripts/check-template-starters.ts` 通过：3 个 starter 均 5 类/25 题、无空字段和重复题面 | 学科/EHS 专家逐题审阅；在此之前不能称为已审核模板 |
+| TypeScript | 已确认 | `pnpm exec tsc --noEmit` 退出码 0 | 无 |
+| 目标 ESLint / Prettier | 未完全通过 | ESLint 有 1 个 React 规则 error、3 个 `<img>` warning；Prettier 提示 4 个文件未格式化 | 后续由代码侧修复；不影响线上当前 4 页索引结论 |
+| 生产构建 | 本轮未取得新通过证据 | 使用本地 Supabase 配置，以及显式 `DATABASE_URL=''` 的隔离环境，`pnpm build:fast` 均在 `Creating an optimized production build` 长时间无输出后中断；此前 2026-10-13 记录的构建通过仍属于历史证据 | 提供 CI/Vercel 构建日志，或在可运行的本地构建环境重新跑 build |
 
 ## 初始反馈与已作决策
 
@@ -53,10 +76,10 @@
 | ----------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------------- | -------------- |
 | 源码审计          | 自定义 GA4 漏斗事件缺失                                                                 | 无法判断 SEO 流量是否完成生成或开始游戏                        | 已补齐事件，部署后以 GA4 DebugView 验证                              | 已修复，待部署 |
 | 源码审计          | 反馈请求失败时仍显示“已收到”                                                            | 反馈样本会被虚假成功状态污染，用户也无法知道保存失败           | 已改为仅在 API 成功后确认                                            | 已修复，待部署 |
-| 生产浏览器核验    | 页面能生成 25 题，但显示 starter-board fallback；首屏仍宣称 AI，后续段落仍宣称分享码/QR | 对外推广会把 fallback 能力包装成未验证的 AI/多人能力，损害信任 | 本地校准全部公开承诺；在新版本部署并回归前暂停外部提交               | 已修复，待部署 |
-| 生产浏览器核验    | GA4、Clarity 均未加载                                                                   | 即使开始推广也无法看到关键词流量后的产品行为                   | 优先配置测量，再把 `generate_completed`、`game_started` 设为关键事件 | 等待账号/配置  |
+| 生产浏览器核验    | 旧生产版本曾显示 starter-board fallback 和 AI/QR/房间承诺；2026-10-27 线上复核已看到校准后的文案 | 旧承诺会损害信任；当前公开页面已与已验证能力一致 | 保持当前文案；若恢复 AI/多人功能，先完成真实能力验证 | 已修复并线上验证 |
+| 生产浏览器核验    | GA4、Clarity 均未加载                                                                   | 即使开始推广也无法看到关键词流量后的产品行为                   | 配置测量，再把 `generate_completed`、`game_started` 设为关键事件 | 仍阻塞 |
 | 构建验证          | 远程 Google Fonts 依赖会在受限网络中阻断构建                                            | 发布可靠性受第三方构建时网络影响                               | 改用系统字体并通过完整生产构建                                       | 已修复         |
-| 真实用户/搜索数据 | 尚无可读取的 GSC、GA4、访谈或引荐数据                                                   | 不能对关键词、CTR、转化率或用户需求下结论                      | W1 先完成账号验证与事件验证；W2 才开始收集可用性反馈                 | 待执行         |
+| 真实用户/搜索数据 | GSC 已有 4 个已编入索引页面；另有 28 天截图显示 75 次展示、2 次点击、平均排名 48.8；GA4/Clarity/访谈/引荐仍无数据 | 已能确认索引和早期搜索基线，但尚不能判断漏斗转化或用户需求 | 配置 GA4/Clarity，导出 GSC Queries/Pages，并开始 5 次目标用户测试 | 部分完成 |
 
 ## 事件验证清单（部署后）
 
@@ -64,39 +87,39 @@
 
 | 测试步骤             | Expected event                           | GA4 DebugView | 状态   |
 | -------------------- | ---------------------------------------- | ------------- | ------ |
-| 打开核心英文落地页   | `landing_view`                           | 待验证        | 待部署 |
-| 聚焦主题输入框       | `topic_input_started`                    | 待验证        | 待部署 |
-| 点击生成             | `generate_started`                       | 待验证        | 待部署 |
-| 生成成功/失败        | `generate_completed` / `generate_failed` | 待验证        | 待部署 |
-| 打开审核区或完成生成 | `review_opened`                          | 待验证        | 待部署 |
-| 点击 Start game      | `game_started`                           | 待验证        | 待部署 |
-| 下载离线网页         | `offline_game_downloaded`                | 待验证        | 待部署 |
-| 成功提交反馈         | `feedback_submitted`                     | 待验证        | 待部署 |
+| 打开核心英文落地页   | `landing_view`                           | 线上 `dataLayer` 已观察到；GA4 脚本未加载 | 部署后验证 GA4 |
+| 聚焦主题输入框       | `topic_input_started`                    | 线上 `dataLayer` 已观察到；GA4 脚本未加载 | 部署后验证 GA4 |
+| 点击生成             | `generate_started`                       | 线上 `dataLayer` 已观察到；GA4 脚本未加载 | 部署后验证 GA4 |
+| 生成成功/失败        | `generate_completed` / `generate_failed` | 线上成功路径 `generate_completed` 已观察到；GA4 脚本未加载 | 部署后补失败路径并验证 GA4 |
+| 打开审核区或完成生成 | `review_opened`                          | 线上 `dataLayer` 已观察到；GA4 脚本未加载 | 部署后验证 GA4 |
+| 点击 Start game      | `game_started`                           | 线上 `dataLayer` 已观察到；GA4 脚本未加载 | 部署后验证 GA4 |
+| 下载离线网页         | `offline_game_downloaded`                | 线上 `dataLayer` 已观察到；GA4 脚本未加载 | 部署后验证 GA4 |
+| 成功提交反馈         | `feedback_submitted`                     | 待验证        | 先提交一次匿名测试，再在 GA4/后台确认 |
 
-## 当前部署门禁
+## 当前剩余门禁
 
-以下条件全部满足后，才能把本轮代码状态从“本地完成”改为“线上完成”，并开始首批目录提交：
+以下条件全部满足后，才能把本轮 SEO 冲刺状态标记为“线上完成”，并开始首批目录提交：
 
-1. 将当前工作区修改部署到 `www.quizboardly.xyz`。
-2. 生产首页和三个核心页不再宣传未启用的 AI 生成、实时房间、分享码或 QR 加入。
-3. 生产 HTML 可读取首页 `WebApplication` JSON-LD，canonical/robots/H1 未回退。
-4. 匿名用户完成一次“输入 -> 生成 -> Review -> Start game -> Download”回归；反馈失败时不得显示成功。
-5. GA4/Clarity 脚本实际加载；DebugView 收到完整事件链，且事件参数不含主题、题目、反馈正文、房间码或身份信息。
+1. 记录当前生产站对应的部署 commit 或 CI/Vercel 构建记录；公开页面已确认使用校准后的产品文案。
+2. GSC 的 4 个具体 URL Inspection 和 sitemap 最近读取记录已完成；Bing 仍需完成验证或明确暂不接入。
+3. 主流程“输入 -> 生成 -> Review -> Start game -> Download”已通过线上回归；仍需确认反馈失败时不得显示成功。
+4. GA4 ID 已保存但仍需部署后验证；配置 Clarity；DebugView 收到完整事件链，且事件参数不含主题、题目、反馈正文、房间码或身份信息。
+5. 至少一个模板完成学科/EHS 人工逐题审阅；外链提交前补齐支持邮箱、品牌账号和真实截图/演示。
 
 ## Day 2 优先动作
 
-1. 部署本轮已通过构建的修改，按“当前部署门禁”完成生产回归。
-2. 取得 Search Console、Bing Webmaster Tools、GA4 和 Clarity 的已登录访问，执行域名验证、sitemap 提交、URL Inspection 与 DebugView 检查。
-3. 配置或明确关闭 AI provider：未配置时继续使用 starter-board 定位，不允许恢复 AI-powered 文案。
-4. 生产回归通过后，从 [SEO-CHANNEL-TRACKER-US-EN.md](./SEO-CHANNEL-TRACKER-US-EN.md) 开始首批 5 个入口；外部提交前确认品牌账号、支持邮箱和最终对外身份。
+1. 记录生产部署 commit/构建记录，并完成匿名生成、审核、主持、下载和反馈失败路径回归。
+2. 由有权限的人完成 Bing 验证或明确暂不接入；部署配置缓存修正后验证 GA4，并配置 Clarity。
+3. 保持当前 starter-board / editable draft 定位；在 AI provider 未完成生产验证前，不恢复 AI-powered 文案。
+4. 剩余门禁通过后，从 [SEO-CHANNEL-TRACKER-US-EN.md](./SEO-CHANNEL-TRACKER-US-EN.md) 开始首批 5 个入口；外部提交前确认品牌账号、支持邮箱和最终对外身份。
 5. 招募 5 位目标用户并排期 W2 可用性测试；在获得真实访谈前，反馈数量继续保持 0。
 
 ## Day 30 KPI 快照
 
 | 指标                                  |       Day 0 | Day 14 | Day 30 | 备注                            |
 | ------------------------------------- | ----------: | -----: | -----: | ------------------------------- |
-| 已索引核心 URL                        | 待 GSC 访问 |        |        | 不能以本地 sitemap 代替索引状态 |
-| 美国非品牌查询展现                    | 待 GSC 访问 |        |        |                                 |
+| 已索引核心 URL                        | 4（4 个 URL Inspection 截图确认） |        |        | 继续观察新增页面；当前 4 个核心 URL 已有 Google 收录证据 |
+| 美国非品牌查询展现                    | 75 展示 / 2 点击 / 平均排名 48.8（截图确认） |        |        | 需导出 Queries/Pages/Countries/Devices，区分品牌与非品牌 |
 | 自然/引荐 `generate_completed` 转化率 | 待 GA4 部署 |        |        |                                 |
 | 有效发布/引荐入口                     |           0 |        |        | 未发布即为 0，不填估值          |
 | 有效用户反馈                          |           0 |        |        | 当前无真实用户样本              |

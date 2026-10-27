@@ -1,4 +1,4 @@
-import { revalidateTag, unstable_cache } from 'next/cache';
+import { revalidatePath, revalidateTag, unstable_cache } from 'next/cache';
 
 import { db } from '@/core/db';
 import { envConfigs } from '@/config';
@@ -38,6 +38,10 @@ export async function saveConfigs(configs: Record<string, string>) {
   });
 
   revalidateTag(CACHE_TAG_CONFIGS, 'max');
+  // Config values are consumed by the root layout, which can be statically
+  // rendered. Invalidate that layout so analytics and other integrations take
+  // effect immediately after an admin save.
+  revalidatePath('/', 'layout');
 
   return result;
 }

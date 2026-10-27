@@ -1,6 +1,6 @@
 # Quizboard Maker: US/English Launch Pack
 
-> 状态：W1 文案与基础素材完成，生产已核验；本地承诺校准尚未部署，外部提交暂停。  
+> 状态：文案与基础素材完成；2026-10-27 已用 bb-browser 核验生产校准版本，外部提交仍暂停。
 > 使用范围：Product Hunt、Indie Hackers、AlternativeTo、SaaSHub、Crunchbase、教师/培训师外联。  
 > 发布前门槛：生产站通过第 1 周验收；只使用与生产功能一致的版本。
 
@@ -17,7 +17,7 @@
 ## Production Check Result
 
 - Production generated a complete 25-question board, but the response identified it as a subject-grounded starter board. Treat the AI provider as unverified or unavailable.
-- Production currently still displays “AI-powered” and room-code/QR claims. Local copy removes those claims, but this is not complete until the new version is deployed and rechecked.
+- 2026-10-27 线上复核确认核心页面已移除 “AI-powered”、room-code 和 QR claims；当前应继续使用 editable/topic-based board、review、host 和 offline download 的事实描述。
 - “AI-powered” or “AI-generated”: do not use unless `AI_API_URL`, `AI_API_KEY`, and `AI_MODEL` are configured and a production generation is verified as provider-backed.
 - “Online multiplayer”, “real-time rooms”, “player collaboration”, “QR join”, or “live cross-device scoring”: do not use. The current MVP does not provide a verified real-time multiplayer service.
 - “Private boards”: use only after an authenticated production save flow is verified.
@@ -48,14 +48,14 @@ Quizboard Maker is not an official Jeopardy product. It supports a category-and-
 | Field               | Approved value                                                                | Status                                                |
 | ------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------- |
 | Product name        | Quizboard Maker                                                               | Ready                                                 |
-| Website             | https://www.quizboardly.xyz                                                   | Production accessible; copy update pending deployment |
+| Website             | https://www.quizboardly.xyz                                                   | Production accessible; corrected copy verified 2026-10-27 |
 | Tagline             | Turn a topic into an editable quiz board in minutes.                          | Ready                                                 |
 | Short description   | Use the 94-word version above; shorten only without adding claims             | Ready                                                 |
 | Long description    | Use the 244-word version above                                                | Ready                                                 |
 | Logo                | `code/public/logo.png`, 1024×1024                                             | Ready                                                 |
 | Social preview      | `code/public/preview.png`, 2540×1350                                          | Ready                                                 |
-| Product screenshots | Need 3-5 captures of the corrected production release                         | Blocked by deployment, not browser access             |
-| Demo video          | Need 30-60 second recording of the corrected production flow                  | Blocked by deployment                                 |
+| Product screenshots | Need 3-5 captures of the corrected production release                         | Needs capture / owner review                          |
+| Demo video          | Need 30-60 second recording of the corrected production flow                  | Needs recording / owner review                        |
 | Support email       | Not found in repository configuration                                         | Needs owner input                                     |
 | Pricing             | Not verified                                                                  | Leave blank / do not claim                            |
 | UTM convention      | `utm_source={platform-domain}&utm_medium=referral&utm_campaign=launch_2026q4` | Ready                                                 |
