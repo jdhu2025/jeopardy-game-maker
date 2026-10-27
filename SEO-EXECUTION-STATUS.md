@@ -12,7 +12,7 @@
 | ------------------------------ | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | 生产站可抓取性核验             | 已完成（线上复核） | 2026-10-27 用 bb-browser 复核 4 个核心 URL：均为 200、唯一 H1、自指 canonical、`index, follow`、`lang=en`，正文和结构化数据可读；sitemap、robots 返回 200；HTTP、非 www、`/zh` 和近义 URL 归一正确；用户随后提供 GSC 逐 URL 收录截图 | 部署后版本变更再抽查；Google 的 canonical/抓取细节以 URL Inspection 展开项为准 |
 | GSC / Bing 验证与 sitemap 提交 | GSC 已完成；Bing 未验证 | 用户提供的 4 张 GSC URL Inspection 截图分别确认首页、`/jeopardy-game-maker`、`/how-to-make-a-jeopardy-game`、`/classroom-review-game-maker` 均“网址已收录到 Google”；sitemap 截图显示上次读取 `2026/10/23`、已发现网页 `4`；Bing 无证据 | 保留 GSC 证据；Bing 由有权限的人验证，或明确暂不接入 |
-| GA4 / Clarity 生产配置         | GA4 已配置并线上加载；Clarity 未配置 | Measurement ID `G-690K2CQ0PF` 已通过管理员设置保存；自动部署后公网复核 `window.gtag` 为 function、Google Tag 脚本返回 200、`dataLayer` 含 `config / G-690K2CQ0PF`，并观察到 `g/collect` 请求；Clarity 仍未配置 | 在 GA4 DebugView 确认完整事件；另行创建并填写 Clarity ID，再验证 Clarity 实时会话 |
+| GA4 / Clarity 生产配置         | GA4、Clarity 已配置并线上加载 | Measurement ID `G-690K2CQ0PF` 和 Clarity ID `z42b62ywxw` 均已通过管理员设置保存；公网复核 `window.gtag`、`window.clarity` 均为 function，Google Tag 和 `https://www.clarity.ms/tag/z42b62ywxw` 均出现在页面资源中，并观察到 GA4/Clarity 请求 | 在 GA4 DebugView 确认完整事件；在 Clarity 控制台确认实时会话和录制数据 |
 | 漏斗埋点                       | 代码完成；GA4 脚本和首个事件线上加载 | 源码含 9 个不含用户内容的事件；公网复核已看到 `landing_view` 进入 `dataLayer` 并调用 gtag，浏览器也发起了 Google Analytics collect 请求 | 在 DebugView 完成一次匿名漏斗回归，把各事件结果填入下方清单 |
 | 用户反馈可靠性                 | 代码完成；生产回归待做 | 反馈 UI 只在 `/api/feedback` 返回 2xx 后关闭并显示成功，失败时保留输入并显示失败；当前尚未在生产提交测试反馈并确认后台记录 | 人工提交一次不含敏感内容的测试反馈，确认后台记录后更新状态 |
 | 产品承诺校准                   | 已完成并线上验证   | 2026-10-27 线上 4 个核心页均使用 editable/topic-based board 文案；未发现旧的 AI-powered、Join room、QR 或跨设备实时承诺；当前页面展示生成、审核、主持和离线下载 | 后续若重新启用 AI 或实时能力，必须先完成能力验证再恢复文案 |
@@ -63,8 +63,8 @@
 | Google 索引数量 | 已确认 4 个具体 URL | 用户提供的 4 张 GSC URL Inspection 截图分别显示：首页、`/jeopardy-game-maker`、`/how-to-make-a-jeopardy-game`、`/classroom-review-game-maker` 均“网址已收录到 Google”；页面索引编制均显示“网页已编入索引” | 截图未展开 Google-selected canonical、最后抓取时间和 sitemap discovery 详情；这些不是当前收录结论的阻塞项 |
 | 产品文案上线 | 已确认 | 线上页面已显示 editable/topic-based board、review、host、offline download；未发现旧 AI/QR/Join room 文案 | 无；重新部署后需抽查 |
 | 匿名核心流程 | 已确认 | 线上完成“输入主题 -> 生成 25 题 -> Review -> Start game -> 返回 Review -> Download offline game”；页面状态分别显示 `Board ready`、主持界面和 `Offline game downloaded` | 反馈失败路径仍需一次不敏感内容的人工回归 |
-| GA4 / Clarity | GA4 已线上加载；Clarity 未配置 | 自动部署后 bb-browser 复核公网首页：`window.gtag` 为 function，`https://www.googletagmanager.com/gtag/js?id=G-690K2CQ0PF` 返回 200，`dataLayer` 含 GA4 config 和 `landing_view`；`window.clarity` 仍为 undefined | GA4 DebugView 最终确认收数；创建 Clarity 项目并填写 ID |
-| 漏斗事件代码 | 已确认代码和首事件队列 | 代码有 9 个事件；线上首页可见 `dataLayer` 中的 `landing_view`，但没有 GA4 消费者 | 配置 GA4 后验证完整漏斗 |
+| GA4 / Clarity | GA4、Clarity 已线上加载 | bb-browser 刷新公网首页后复核：`window.gtag`、`window.clarity` 均为 function；页面资源含 `https://www.googletagmanager.com/gtag/js?id=G-690K2CQ0PF` 和 `https://www.clarity.ms/tag/z42b62ywxw`，并观察到 `c.clarity.ms/c.gif`、`n.clarity.ms/collect` 请求 | GA4 DebugView 最终确认收数；在 Clarity 控制台确认实时会话和录制数据 |
+| 漏斗事件代码 | 已确认代码和首事件队列 | 代码有 9 个事件；线上首页可见 `dataLayer` 中的 `landing_view`，且 gtag/Google Tag 已加载 | 在 GA4 DebugView 验证完整漏斗 |
 | 模板 starter 自动质量 | 已确认自动门槛 | `node --import tsx scripts/check-template-starters.ts` 通过：3 个 starter 均 5 类/25 题、无空字段和重复题面 | 学科/EHS 专家逐题审阅；在此之前不能称为已审核模板 |
 | TypeScript | 已确认 | `pnpm exec tsc --noEmit` 退出码 0 | 无 |
 | 目标 ESLint / Prettier | 未完全通过 | ESLint 有 1 个 React 规则 error、3 个 `<img>` warning；Prettier 提示 4 个文件未格式化 | 后续由代码侧修复；不影响线上当前 4 页索引结论 |
@@ -77,9 +77,9 @@
 | 源码审计          | 自定义 GA4 漏斗事件缺失                                                                 | 无法判断 SEO 流量是否完成生成或开始游戏                        | 已补齐事件，部署后以 GA4 DebugView 验证                              | 已修复，待部署 |
 | 源码审计          | 反馈请求失败时仍显示“已收到”                                                            | 反馈样本会被虚假成功状态污染，用户也无法知道保存失败           | 已改为仅在 API 成功后确认                                            | 已修复，待部署 |
 | 生产浏览器核验    | 旧生产版本曾显示 starter-board fallback 和 AI/QR/房间承诺；2026-10-27 线上复核已看到校准后的文案 | 旧承诺会损害信任；当前公开页面已与已验证能力一致 | 保持当前文案；若恢复 AI/多人功能，先完成真实能力验证 | 已修复并线上验证 |
-| 生产浏览器核验    | 旧版本 GA4、Clarity 均未加载；自动部署后 GA4 已加载，Clarity 仍未配置                  | GA4 已可接收页面与产品事件，但还没有 DebugView 完整链路和 Clarity 录屏数据 | 在 DebugView 验证 `generate_completed`、`game_started` 等关键事件，并配置 Clarity | 部分解除 |
+| 生产浏览器核验    | 旧版本 GA4、Clarity 均未加载；当前两者均已加载                  | GA4、Clarity 已可接收页面请求，但还没有 DebugView 完整链路和 Clarity 录屏数据 | 在 DebugView 验证 `generate_completed`、`game_started` 等关键事件，并在 Clarity 控制台确认会话 | 部分解除 |
 | 构建验证          | 远程 Google Fonts 依赖会在受限网络中阻断构建                                            | 发布可靠性受第三方构建时网络影响                               | 改用系统字体并通过完整生产构建                                       | 已修复         |
-| 真实用户/搜索数据 | GSC 已有 4 个已编入索引页面；另有 28 天截图显示 75 次展示、2 次点击、平均排名 48.8；GA4/Clarity/访谈/引荐仍无数据 | 已能确认索引和早期搜索基线，但尚不能判断漏斗转化或用户需求 | 配置 GA4/Clarity，导出 GSC Queries/Pages，并开始 5 次目标用户测试 | 部分完成 |
+| 真实用户/搜索数据 | GSC 已有 4 个已编入索引页面；另有 28 天截图显示 75 次展示、2 次点击、平均排名 48.8；尚无可报告的 GA4/Clarity 行为样本、访谈或引荐数据 | 已能确认索引和早期搜索基线，但尚不能判断漏斗转化或用户需求 | 导出 GSC Queries/Pages，确认 GA4/Clarity 报表，并开始 5 次目标用户测试 | 部分完成 |
 
 ## 事件验证清单（部署后）
 
@@ -103,13 +103,13 @@
 1. 记录当前生产站对应的部署 commit 或 CI/Vercel 构建记录；公开页面已确认使用校准后的产品文案。
 2. GSC 的 4 个具体 URL Inspection 和 sitemap 最近读取记录已完成；Bing 仍需完成验证或明确暂不接入。
 3. 主流程“输入 -> 生成 -> Review -> Start game -> Download”已通过线上回归；仍需确认反馈失败时不得显示成功。
-4. GA4 已线上加载但仍需 DebugView 确认完整事件链；配置 Clarity；确保事件参数不含主题、题目、反馈正文、房间码或身份信息。
+4. GA4 已线上加载但仍需 DebugView 确认完整事件链；Clarity 已线上加载但仍需确认实时会话和录制数据；确保事件参数不含主题、题目、反馈正文、房间码或身份信息。
 5. 至少一个模板完成学科/EHS 人工逐题审阅；外链提交前补齐支持邮箱、品牌账号和真实截图/演示。
 
 ## Day 2 优先动作
 
 1. 记录生产部署 commit/构建记录，并完成匿名生成、审核、主持、下载和反馈失败路径回归。
-2. 由有权限的人完成 Bing 验证或明确暂不接入；在 GA4 DebugView 验证漏斗，并配置 Clarity。
+2. 由有权限的人完成 Bing 验证或明确暂不接入；在 GA4 DebugView 验证漏斗，并在 Clarity 控制台确认实时会话。
 3. 保持当前 starter-board / editable draft 定位；在 AI provider 未完成生产验证前，不恢复 AI-powered 文案。
 4. 剩余门禁通过后，从 [SEO-CHANNEL-TRACKER-US-EN.md](./SEO-CHANNEL-TRACKER-US-EN.md) 开始首批 5 个入口；外部提交前确认品牌账号、支持邮箱和最终对外身份。
 5. 招募 5 位目标用户并排期 W2 可用性测试；在获得真实访谈前，反馈数量继续保持 0。
