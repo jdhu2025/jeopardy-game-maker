@@ -54,7 +54,7 @@ Quizboard Maker is not an official Jeopardy product. It supports a category-and-
 | Long description    | Use the 244-word version above                                                | Ready                                                 |
 | Logo                | `code/public/logo.png`, 1024×1024                                             | Ready                                                 |
 | Social preview      | `code/public/preview.png`, 2540×1350                                          | Ready                                                 |
-| Product screenshots | Need 3-5 captures of the corrected production release                         | Needs capture / owner review                          |
+| Product screenshots | `code/public/seo-assets/quizboard-landing.png`, `quizboard-review.png`, `quizboard-host.png` | Captured from production 2026-10-27; owner should approve crop/use |
 | Demo video          | Need 30-60 second recording of the corrected production flow                  | Needs recording / owner review                        |
 | Support email       | Not found in repository configuration                                         | Needs owner input                                     |
 | Pricing             | Not verified                                                                  | Leave blank / do not claim                            |
