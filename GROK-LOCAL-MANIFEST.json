@@ -1,0 +1,50 @@
+{
+  "manifest_version": 1,
+  "project": "Quizboard Maker",
+  "workspace_root": "/Users/ken/hjd/code/SEO/jeopardy-game-maker",
+  "canonical_url": "https://www.quizboardly.xyz",
+  "support_alias": "support@quizboardly.xyz",
+  "support_alias_state": "planned_unverified",
+  "read_order": [
+    "GROK-LOCAL-MANIFEST.json",
+    "GROK-BACKLINK-AGENT-BRIEF.md",
+    "GROK-EXECUTION-SETUP.md",
+    "BRAND-ACCOUNT-PACK.md",
+    "SEO-LAUNCH-PACK-US-EN.md",
+    "SEO-CHANNEL-TRACKER-US-EN.md",
+    "SEO-EXECUTION-STATUS.md",
+    "SEO-TEMPLATE-EDITORIAL-REVIEW.md",
+    "backlink-queue.csv"
+  ],
+  "queue": {
+    "path": "backlink-queue.csv",
+    "one_row_per_domain": true,
+    "update_after_each_result": true,
+    "required_columns": 31
+  },
+  "active_assets": {
+    "logo_png": {"path": "code/public/logo.png", "sha256": "b74a5a41cdf1f0f597a0fe7c5a672cb0067b71f04245f5826df983d4e09bbaa0", "use": ["avatar", "directory_logo", "app_logo"], "upload": true},
+    "logo_svg": {"path": "brand/quizboard-maker-mark.svg", "sha256": "13b78b2b4922489bb0a61f0f8b24f260b7c6165e1fea0bbdbcba1eb783281d61", "use": ["source", "vector_export"], "upload": true},
+    "favicon": {"path": "code/public/favicon.ico", "sha256": "4ee9894ebcaba704cae0ed72c114b13b88491ab4c71f90f3ccc0fa3171d958bb", "use": ["browser_favicon"], "upload": true},
+    "social_preview": {"path": "code/public/preview.png", "sha256": "801a3d3cb86b4c0a4ee1e3e290f74760f367515c111f9802f6459026556b78e3", "use": ["open_graph", "directory_preview"], "upload": true},
+    "landing_screenshot": {"path": "code/public/seo-assets/quizboard-landing.png", "use": ["product_screenshot"], "upload": true},
+    "review_screenshot": {"path": "code/public/seo-assets/quizboard-review.png", "use": ["product_screenshot"], "upload": true},
+    "host_screenshot": {"path": "code/public/seo-assets/quizboard-host.png", "use": ["product_screenshot"], "upload": true},
+    "demo_video": {"path": "promo-video/out/final-1080p.mp4", "sha256": "28af60de341a7aea5e8f09f5dc48f321a9420bec28a365a4e1398fc9f9803c80", "use": ["product_demo"], "upload": true},
+    "video_qa_still": {"path": "promo-video/out/check_final-1080p.jpg", "use": ["internal_qa"], "upload": false}
+  },
+  "stale_assets": [
+    "the old ShipAny logo is not an approved asset",
+    "the old ShipAny preview screenshot is not an approved asset",
+    "do not use code/public/favicon.ico from an old Workspace cache without reloading the current file"
+  ],
+  "operating_limits": {
+    "daily_submission_target": "6-12 eligible free sites",
+    "daily_github_pr_limit": "2-4 relevant PRs",
+    "approval_required_for_daily_batch": false,
+    "skip_owner_action": true,
+    "skip_payment": true,
+    "skip_captcha": true,
+    "skip_unknown_rules": true
+  }
+}

@@ -2,15 +2,15 @@
 
 > Owner：Codex（结构、技术与发布状态）  
 > 建立日期：2026-10-13  
-> 原则：自动生成只产生 starter draft。没有学科/培训审阅人与逐题记录，不创建可索引模板 URL，不写“已审核”。
+> 原则：自动生成只产生 starter draft。没有学科/培训审阅人与逐题记录，不创建可索引模板 URL，不写“已审核”。Codex editorial QA 记录见 [SEO-TEMPLATE-EDITORIAL-REVIEW.md](./SEO-TEMPLATE-EDITORIAL-REVIEW.md)，不等同于外部专家签字。
 
 ## 模板队列
 
 | Template | Audience | Learning target | Starter support | Human reviewer | QA status | Publish status |
 |---|---|---|---|---|---|---|
-| Grade 7 Weather Systems | 美国 Grade 7 science | 解释气压、湿度、锋面、云和预报证据之间的关系 | 专用 `weather systems` profile，5 类/25 题自动完整性检查通过 | 待指定美国中学科学教师或具备课程经验的审阅人 | blocked: 未逐题核实课程适配与事实 | blocked |
-| US History Review | 美国 middle/high school social studies | 用因果、证据、政府权力、视角和变化解释历史问题 | 专用 `history and civics` profile，5 类/25 题自动完整性检查通过 | 待指定美国历史/公民学科审阅人 | blocked: 需限定具体时期并逐题核实 | blocked |
-| Workplace Safety Fundamentals | 美国新员工/L&D | 识别危害、控制层级、PPE、事件报告和应急响应 | 新增专用 `workplace safety fundamentals` profile，5 类/25 题自动完整性检查通过 | 待指定 EHS/L&D 审阅人 | blocked: 必须核对场所政策与 OSHA 适用范围 | blocked |
+| Grade 7 Weather Systems | 美国 Grade 7 science | 解释气压、湿度、锋面、云和预报证据之间的关系 | 专用 `weather systems` profile，5 类/25 题自动完整性检查通过 | 待指定美国中学科学教师或具备课程经验的审阅人 | Codex editorial QA: 10 approved / 15 revise; external review required | blocked |
+| US History Review | 美国 middle/high school social studies | 用因果、证据、政府权力、视角和变化解释历史问题 | 专用 `history and civics` profile，5 类/25 题自动完整性检查通过 | 待指定美国历史/公民学科审阅人 | Codex editorial QA: 0 approved / 25 revise; period and sources required | blocked |
+| Workplace Safety Fundamentals | 美国新员工/L&D | 识别危害、控制层级、PPE、事件报告和应急响应 | 新增专用 `workplace safety fundamentals` profile，5 类/25 题自动完整性检查通过 | 待指定 EHS/L&D 审阅人 | Codex editorial QA: 5 approved / 20 revise; site policy review required | blocked |
 
 ## 单个模板发布前逐题门禁
 

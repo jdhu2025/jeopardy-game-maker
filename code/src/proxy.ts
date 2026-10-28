@@ -1,20 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSessionCookie } from 'better-auth/cookies';
-import createIntlMiddleware from 'next-intl/middleware';
 
+import { defaultLocale } from '@/config/locale';
 import { routing } from '@/core/i18n/config';
 import {
   indexableQuizboardSeoSlugs,
   quizboardSeoRedirects,
 } from '@/shared/blocks/quizboard/seo-pages';
 
-const intlMiddleware = createIntlMiddleware(routing);
-
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
-  // Handle internationalization first
-  const intlResponse = intlMiddleware(request);
 
   // Extract locale from pathname
   const locale = pathname.split('/')[1];
@@ -49,6 +44,17 @@ export async function proxy(request: NextRequest) {
     );
   }
 
+  // Keep the default locale as an internal rewrite for unprefixed URLs. A
+  // redirect from /en back to / would run again after the rewrite and create a
+  // loop in Next's proxy pipeline, so canonical metadata handles that alias.
+  const response = isValidLocale
+    ? NextResponse.next()
+    : (() => {
+        const localizedUrl = request.nextUrl.clone();
+        localizedUrl.pathname = `/${defaultLocale}${pathname === '/' ? '' : pathname}`;
+        return NextResponse.rewrite(localizedUrl);
+      })();
+
   // Only check authentication for admin routes
   if (
     pathWithoutLocale.startsWith('/admin') ||
@@ -77,8 +83,8 @@ export async function proxy(request: NextRequest) {
     // will be done in the layout or individual pages using requirePermission()
   }
 
-  intlResponse.headers.set('x-pathname', request.nextUrl.pathname);
-  intlResponse.headers.set('x-url', request.url);
+  response.headers.set('x-pathname', request.nextUrl.pathname);
+  response.headers.set('x-url', request.url);
 
   // Remove Set-Cookie from public pages to allow caching
   // We exclude admin, settings, activity, and auth pages from this behavior
@@ -89,18 +95,17 @@ export async function proxy(request: NextRequest) {
     !pathWithoutLocale.startsWith('/sign-') &&
     !pathWithoutLocale.startsWith('/auth')
   ) {
-    intlResponse.headers.delete('Set-Cookie');
+    response.headers.delete('Set-Cookie');
 
     // Cache-Control header for public pages
     const cacheControl = 'public, s-maxage=3600, stale-while-revalidate=14400';
 
-    intlResponse.headers.set('Cache-Control', cacheControl);
-    intlResponse.headers.set('CDN-Cache-Control', cacheControl);
-    intlResponse.headers.set('Cloudflare-CDN-Cache-Control', cacheControl);
+    response.headers.set('Cache-Control', cacheControl);
+    response.headers.set('CDN-Cache-Control', cacheControl);
+    response.headers.set('Cloudflare-CDN-Cache-Control', cacheControl);
   }
 
-  // For all other routes (including /, /sign-in, /sign-up, /sign-out), just return the intl response
-  return intlResponse;
+  return response;
 }
 
 export const config = {

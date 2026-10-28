@@ -1,14 +1,14 @@
 {
   "metadata": {
-    "title": "Update Logs",
-    "description": "View product update logs, including latest features and improvements."
+    "title": "Quizboard Maker updates",
+    "description": "Product updates for Quizboard Maker."
   },
   "page": {
     "sections": {
       "updates": {
         "id": "updates",
-        "title": "Update Logs",
-        "description": "View product update logs, including latest features and improvements."
+        "title": "Product updates",
+        "description": "Changes and improvements to Quizboard Maker."
       }
     }
   }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from '@/shared/blocks/quizboard/quizboard-app.module.css';
 
 type Board = { shareId: string; title: string; topic: string; audience: string; language: string; createdAt: string };
@@ -27,7 +28,7 @@ export default function BoardsPage() {
 
   return <main className={styles.libraryPage}>
     <div className={styles.libraryHeader}>
-      <Link className={styles.brand} href="/"><span className={styles.brandMark}>Q</span><span>quizboard<span className={styles.brandDot}>.</span></span></Link>
+      <Link className={styles.brand} href="/"><Image className={styles.brandMark} src="/logo.png" alt="" aria-hidden="true" width={30} height={30} /><span>quizboard<span className={styles.brandDot}>.</span></span></Link>
       <Link className={styles.ghostButton} href="/">Make a game</Link>
     </div>
     <section className={styles.libraryHero}>

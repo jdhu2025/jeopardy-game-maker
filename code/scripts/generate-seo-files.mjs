@@ -41,7 +41,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 // sitemap advertised the retired .com hostname. Avoid volatile lastmod values
 // and ignored priority/changefreq fields here, matching Google's core format.
 const googleSitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${googleSitemapUrls.join('\n')}\n</urlset>\n`;
-const robots = `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /activity/\nDisallow: /settings/\nDisallow: /privacy-policy\nDisallow: /terms-of-service\n\nSitemap: ${siteUrl}/${authoritativeSitemapFilename}\n`;
+const robots = `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /activity/\nDisallow: /settings/\n\nSitemap: ${siteUrl}/${authoritativeSitemapFilename}\n`;
 
 fs.mkdirSync(publicDir, { recursive: true });
 fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap);

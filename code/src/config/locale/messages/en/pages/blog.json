@@ -1,22 +1,22 @@
 {
   "metadata": {
-    "title": "Blog",
-    "description": "Read latest product features, solutions, and updates."
+    "title": "Quizboard Maker notes",
+    "description": "Product notes and practical ideas for quiz-board activities."
   },
   "page": {
-    "title": "ShipAny Blog",
+    "title": "Quizboard Maker notes",
     "sections": {
       "blog": {
         "id": "blog",
-        "title": "Blog",
-        "description": "Read latest product features, solutions, and updates."
+        "title": "Notes",
+        "description": "Practical ideas for classroom review, training, and group activities."
       }
     }
   },
   "messages": {
     "all": "All",
-    "no_content": "No Content",
-    "crumb": "Blog",
-    "toc": "Table of Contents"
+    "no_content": "No notes yet",
+    "crumb": "Notes",
+    "toc": "Table of contents"
   }
 }

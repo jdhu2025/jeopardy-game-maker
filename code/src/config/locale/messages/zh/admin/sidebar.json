@@ -1,10 +1,10 @@
 {
   "header": {
     "brand": {
-      "title": "ShipAny Two",
+      "title": "Quizboard Maker",
       "logo": {
         "src": "/logo.png",
-        "alt": "ShipAny Two"
+        "alt": "Quizboard Maker"
       },
       "url": "/admin"
     },
@@ -149,7 +149,7 @@
         },
         {
           "title": "邮箱",
-          "url": "mailto:support@your-domain.com",
+          "url": "mailto:support@quizboardly.xyz",
           "icon": "Mail",
           "target": "_blank"
         }

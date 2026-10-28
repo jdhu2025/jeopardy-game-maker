@@ -2,10 +2,10 @@
   "sidebar": {
     "header": {
       "brand": {
-        "title": "ShipAny Chat",
+        "title": "Quizboard Maker Chat",
         "logo": {
           "src": "/logo.png",
-          "alt": "ShipAny Chat"
+          "alt": "Quizboard Maker Chat"
         },
         "url": "/chat"
       },
@@ -78,7 +78,7 @@
           },
           {
             "title": "Email",
-            "url": "mailto:support@your-domain.com",
+            "url": "mailto:support@quizboardly.xyz",
             "icon": "Mail",
             "target": "_blank"
           }

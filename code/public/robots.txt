@@ -4,7 +4,5 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /activity/
 Disallow: /settings/
-Disallow: /privacy-policy
-Disallow: /terms-of-service
 
 Sitemap: https://www.quizboardly.xyz/google-sitemap.xml

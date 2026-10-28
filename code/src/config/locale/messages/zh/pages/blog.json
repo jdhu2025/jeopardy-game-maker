@@ -1,22 +1,22 @@
 {
   "metadata": {
-    "title": "博客",
-    "description": "阅读我们最新的产品功能、解决方案和更新内容。"
+    "title": "Quizboard Maker 文章",
+    "description": "关于课堂复习、培训和团队活动的产品文章与实践建议。"
   },
   "page": {
-    "title": "ShipAny 博客",
+    "title": "Quizboard Maker 文章",
     "sections": {
       "blog": {
         "id": "blog",
-        "title": "博客",
-        "description": "阅读我们最新的产品功能、解决方案和更新内容。"
+        "title": "文章",
+        "description": "关于课堂复习、培训和团队活动的实践建议。"
       }
     }
   },
   "messages": {
     "all": "全部",
-    "no_content": "暂无内容",
-    "crumb": "博客",
+    "no_content": "暂无文章",
+    "crumb": "文章",
     "toc": "目录"
   }
 }

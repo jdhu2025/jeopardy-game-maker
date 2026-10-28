@@ -9,6 +9,7 @@ import {
   type TextareaHTMLAttributes,
 } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { trackQuizboardEvent } from '@/shared/lib/quizboard-analytics';
 
@@ -664,7 +665,7 @@ export function QuizboardApp({
     <div className={styles.shell}>
       <header className={styles.topbar}>
         <Link className={styles.brand} href="/">
-          <span className={styles.brandMark}>Q</span>
+          <Image className={styles.brandMark} src="/logo.png" alt="" aria-hidden="true" width={30} height={30} />
           <span>
             quizboard<span className={styles.brandDot}>.</span>
           </span>
@@ -1236,8 +1237,12 @@ export function QuizboardApp({
         </div>
       )}
       <footer>
-        <span>quizboard maker / build something people remember</span>
-        <span>Questions stay editable until you host.</span>
+        <span>Quizboard Maker / build something people remember</span>
+        <nav aria-label="Footer links">
+          <Link href="/privacy-policy">Privacy</Link>
+          <Link href="/terms-of-service">Terms</Link>
+          <a href="mailto:support@quizboardly.xyz">support@quizboardly.xyz</a>
+        </nav>
       </footer>
     </div>
   );

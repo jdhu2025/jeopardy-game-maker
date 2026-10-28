@@ -1,6 +1,6 @@
 # Quizboard Maker: US/English Launch Pack
 
-> 状态：文案与基础素材完成；2026-10-27 已用 bb-browser 核验生产校准版本，外部提交仍暂停。
+> 状态：文案、截图、品牌资料和本地演示视频已准备；2026-10-27 已用 bb-browser 核验生产校准版本，Cloudflare 邮箱路由、品牌账号注册和外部学科审阅仍需一次性完成。
 > 使用范围：Product Hunt、Indie Hackers、AlternativeTo、SaaSHub、Crunchbase、教师/培训师外联。  
 > 发布前门槛：生产站通过第 1 周验收；只使用与生产功能一致的版本。
 
@@ -54,9 +54,11 @@ Quizboard Maker is not an official Jeopardy product. It supports a category-and-
 | Long description    | Use the 244-word version above                                                | Ready                                                 |
 | Logo                | `code/public/logo.png`, 1024×1024                                             | Ready                                                 |
 | Social preview      | `code/public/preview.png`, 2540×1350                                          | Ready                                                 |
-| Product screenshots | `code/public/seo-assets/quizboard-landing.png`, `quizboard-review.png`, `quizboard-host.png` | Captured from production 2026-10-27; owner should approve crop/use |
-| Demo video          | Need 30-60 second recording of the corrected production flow                  | Needs recording / owner review                        |
-| Support email       | Not found in repository configuration                                         | Needs owner input                                     |
+| Product screenshots | `code/public/seo-assets/quizboard-landing.png`, `quizboard-review.png`, `quizboard-host.png` | Captured from production 2026-10-27; ready for the brand pack |
+| Demo video          | `promo-video/out/final-1080p.mp4` (48 seconds, 1920x1080)                    | Rendered locally; verify the final file before upload |
+| Brand/account pack  | `BRAND-ACCOUNT-PACK.md`                                                       | Copy and asset manifest ready; account handles not registered |
+| Support email       | `support@quizboardly.xyz` via Cloudflare Email Routing                        | Planned alias; destination verification still required |
+| Template QA         | `SEO-TEMPLATE-EDITORIAL-REVIEW.md`                                            | Codex editorial QA complete; external subject review still required |
 | Pricing             | Not verified                                                                  | Leave blank / do not claim                            |
 | UTM convention      | `utm_source={platform-domain}&utm_medium=referral&utm_campaign=launch_2026q4` | Ready                                                 |
 
